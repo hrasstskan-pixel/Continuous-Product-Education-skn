@@ -537,13 +537,16 @@
 
       <!-- TAB 2: VIEW-ONLY LEARNING MODULE (PDF + AUDIO, NO DOWNLOAD) -->
       <section id="tab-learn" class="tab-panel hidden space-y-5">
-        <div class="bg-white rounded-2xl border border-slate-200/90 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
-          <div>
-            <h2 id="learn-mod-title" class="text-lg font-extrabold text-slate-900">Module 1</h2>
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-4 space-y-3 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 id="learn-mod-title" class="text-lg font-extrabold text-slate-900">Module 1</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="learn-mod-select" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-white outline-none"></select>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <select id="learn-mod-select" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-white outline-none"></select>
-          </div>
+          <div id="learn-revision-bar" class="hidden flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs"></div>
         </div>
 
         <!-- Voice Recording Player (Protected, No Download) -->
@@ -787,10 +790,18 @@
 
         <div id="admin-panel" class="hidden space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-900 text-white px-5 py-3 rounded-2xl">
-            <div class="text-xs font-bold">🔓 Admin / Owner Session Active <span class="text-teal-300 font-normal ml-1">(Live updates enabled)</span></div>
-            <button type="button" id="btn-admin-logout" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-bold transition">
-              Lock / Log Out Admin
-            </button>
+            <div class="flex flex-wrap items-center gap-2 text-xs font-bold">
+              <span>🔓 Admin / Owner Session Active</span>
+              <span id="adm-top-sync-pill" class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px]">Live Sync Active</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" id="btn-top-sync-now" class="px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-xs font-bold transition">
+                ⚡ Sync Now
+              </button>
+              <button type="button" id="btn-admin-logout" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-bold transition">
+                Lock / Log Out Admin
+              </button>
+            </div>
           </div>
 
           <!-- Pending Access Requests Notification Banner -->
@@ -1366,8 +1377,12 @@
       adminUnlocked: false
     };
 
-    const DEFAULT_CLOUD_URL = 'https://cep--skn-default-rtdb.asia-southeast1.firebasedatabase.app';
+    const DEFAULT_CLOUD_URL = 'https://product-education-skn-default-rtdb.asia-southeast1.firebasedatabase.app';
     const CLOUD_URL_KEY = 'skn_cloud_sync_url_v1';
+
+    function safeFbKey(str) {
+      return String(str || '').trim().replace(/[.#$\[\]\/\s]+/g, '_');
+    }
 
     function getCloudUrl() {
       try {
@@ -1378,7 +1393,7 @@
           localStorage.setItem(CLOUD_URL_KEY, clean);
           return clean;
         }
-        return (localStorage.getItem(CLOUD_URL_KEY) || DEFAULT_CLOUD_URL).replace(/\/+$/, '');
+        return DEFAULT_CLOUD_URL.replace(/\/+$/, '');
       } catch (e) {
         return DEFAULT_CLOUD_URL;
       }
@@ -1400,16 +1415,21 @@
     function updateCloudBadge() {
       const url = getCloudUrl();
       const cloudBadge = document.getElementById('adm-cloud-status');
-      if (!cloudBadge) return;
-      if (!url) {
-        cloudBadge.textContent = 'Local Only';
-        cloudBadge.className = 'px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold';
-      } else if (lastCloudError) {
-        cloudBadge.textContent = lastCloudError;
-        cloudBadge.className = 'px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold';
-      } else {
-        cloudBadge.textContent = 'Live Sync Active';
-        cloudBadge.className = 'px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold';
+      const topPill = document.getElementById('adm-top-sync-pill');
+      const text = !url ? 'Local Only' : (lastCloudError || 'Live Sync Active');
+      if (cloudBadge) {
+        cloudBadge.textContent = text;
+        cloudBadge.className = !url
+          ? 'px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold'
+          : lastCloudError
+            ? 'px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold'
+            : 'px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold';
+      }
+      if (topPill) {
+        topPill.textContent = text;
+        topPill.className = lastCloudError
+          ? 'px-2.5 py-0.5 rounded-full bg-rose-500/30 text-rose-200 text-[11px]'
+          : 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px]';
       }
     }
 
@@ -1422,19 +1442,20 @@
         let res;
         if (empOnlyId && !state.adminUnlocked) {
           // Employee device: only PATCH their own employee record & progress
+          const fbKey = safeFbKey(empOnlyId);
           const empRec = state.employees[empOnlyId] || {};
           const empProg = state.progressByEmp[empOnlyId] || {};
-          const r1 = await fetch(`${url}/cpe_state/employees/${encodeURIComponent(empOnlyId)}.json`, {
+          const r1 = await fetch(`${url}/cpe_state/employees/${encodeURIComponent(fbKey)}.json`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(empRec)
           });
-          const r2 = await fetch(`${url}/cpe_state/progressByEmp/${encodeURIComponent(empOnlyId)}.json`, {
+          const r2 = await fetch(`${url}/cpe_state/progressByEmp/${encodeURIComponent(fbKey)}.json`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(empProg)
           });
-          res = r1.ok ? r1 : r2;
+          res = !r1.ok ? r1 : r2;
         } else {
           // Admin or Q&A update: PATCH top-level keys (never blindly wipe employees registered concurrently)
           const adminPatch = {
@@ -1454,12 +1475,16 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(adminPatch)
           });
-          // Also PATCH each employee record individually so concurrent new registrations aren't lost
+          // Also PATCH each employee record under sanitized key so concurrent registrations aren't lost
           if (res.ok && payload.employees) {
+            const safeEmps = {};
+            Object.entries(payload.employees).forEach(([k, v]) => {
+              safeEmps[safeFbKey(k)] = v;
+            });
             await fetch(`${url}/cpe_state/employees.json`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload.employees)
+              body: JSON.stringify(safeEmps)
             });
           }
         }
@@ -1596,7 +1621,16 @@
     function applyParsedState(parsed, includeCandidate = true) {
       if (!parsed || typeof parsed !== 'object') return;
       if (includeCandidate && parsed.candidate) state.candidate = parsed.candidate;
-      if (parsed.employees) state.employees = parsed.employees;
+      if (parsed.employees) {
+        const normalizedEmps = {};
+        Object.entries(parsed.employees).forEach(([k, v]) => {
+          if (v && typeof v === 'object') {
+            const realId = (v.empId || k).toUpperCase();
+            normalizedEmps[realId] = { ...v, empId: realId };
+          }
+        });
+        state.employees = normalizedEmps;
+      }
       if (state.candidate && state.candidate.empId) {
         const eid = state.candidate.empId;
         const isRes = (state.restrictedIds || []).includes(eid);
@@ -1678,6 +1712,8 @@
           certId: null,
           completedAt: null
         };
+      } else if (!Array.isArray(progMap[modId].viewedPages)) {
+        progMap[modId].viewedPages = Object.values(progMap[modId].viewedPages || {});
       }
       return progMap[modId];
     }
@@ -1691,6 +1727,7 @@
 
     function isMaterialComplete(mod) {
       const p = ensureProgress(mod.id);
+      if (p.passed) return true;
       const allPages = p.viewedPages.length >= mod.pages.length;
       const audioOk = !mod.audioSrc || p.audioDone;
       return allPages && audioOk;
@@ -2007,12 +2044,36 @@
       }
       allottedMods.forEach((m, idx) => {
         if (!isModuleUnlocked(idx, allottedMods)) return;
+        const p = ensureProgress(m.id);
         const opt = document.createElement('option');
         opt.value = m.id;
-        opt.textContent = m.title;
+        opt.textContent = p.passed ? `✓ ${m.title} (Completed — Review)` : m.title;
         if (m.id === state.activeModuleId) opt.selected = true;
         sel.appendChild(opt);
       });
+
+      const revBar = document.getElementById('learn-revision-bar');
+      if (revBar) {
+        const completedMods = allottedMods.filter(m => ensureProgress(m.id).passed);
+        if (completedMods.length) {
+          revBar.classList.remove('hidden');
+          revBar.classList.add('flex');
+          revBar.innerHTML = '<span class="font-bold text-emerald-700">📚 Completed (Revise Anytime):</span>' +
+            completedMods.map(cm => `<button type="button" data-rev-mod="${cm.id}" class="px-2.5 py-1 rounded-lg font-semibold transition ${cm.id === state.activeModuleId ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100'}">✓ ${cm.title}</button>`).join('');
+          revBar.querySelectorAll('[data-rev-mod]').forEach(btn => {
+            btn.addEventListener('click', () => {
+              state.activeModuleId = btn.dataset.revMod;
+              state.currentPageIdx = 0;
+              saveState();
+              renderLearn();
+            });
+          });
+        } else {
+          revBar.classList.add('hidden');
+          revBar.classList.remove('flex');
+          revBar.innerHTML = '';
+        }
+      }
 
       const mod = allottedMods.find(m => m.id === state.activeModuleId) || allottedMods[0];
       state.activeModuleId = mod.id;
@@ -2112,11 +2173,13 @@
       if (ready) {
         gateMsg.textContent = '✅ All study pages and audio completed! You can now take the Module Quiz.';
         quizBtn.disabled = false;
+        quizBtn.classList.remove('opacity-60');
       } else {
         const needPages = mod.pages.length - prog.viewedPages.length;
         const needAudio = mod.audioSrc && !prog.audioDone;
-        gateMsg.textContent = `Remaining: ${needPages > 0 ? `${needPages} page(s) to view` : ''}${needPages > 0 && needAudio ? ' & ' : ''}${needAudio ? 'listen to voice recording' : ''}.`;
-        quizBtn.disabled = true;
+        gateMsg.textContent = `Remaining: ${needPages > 0 ? `${needPages} page(s) to view` : ''}${needPages > 0 && needAudio ? ' & ' : ''}${needAudio ? 'listen to voice recording (80%+)' : ''}.`;
+        quizBtn.disabled = false;
+        quizBtn.classList.add('opacity-60');
       }
     }
 
@@ -2142,7 +2205,21 @@
         updateLearnGateUI();
       }
     });
-    document.getElementById('btn-go-quiz').addEventListener('click', () => switchTab('quiz'));
+    document.getElementById('btn-go-quiz').addEventListener('click', () => {
+      const mod = state.modules.find(m => m.id === state.activeModuleId);
+      if (mod && !isMaterialComplete(mod)) {
+        const prog = ensureProgress(mod.id);
+        const needPages = mod.pages.length - prog.viewedPages.length;
+        const needAudio = mod.audioSrc && !prog.audioDone;
+        if (needPages > 0) {
+          showToast(`Please view the remaining ${needPages} study page(s) first.`, 'warn');
+        } else if (needAudio) {
+          showToast('Please listen to the Voice Recording above (at least 80%) to unlock the Quiz.', 'warn');
+        }
+        return;
+      }
+      switchTab('quiz');
+    });
 
     function renderQuiz() {
       const allottedMods = getAllottedModules();
@@ -2495,7 +2572,8 @@
             <thead>
               <tr class="border-b border-slate-200 text-slate-500 uppercase">
                 <th class="py-2 pr-3">Emp ID</th>
-                <th class="py-2 pr-3">Name &amp; Role</th>
+                <th class="py-2 pr-3">Name &amp; Designation</th>
+                <th class="py-2 pr-3">Contact (Email &amp; Phone)</th>
                 <th class="py-2 pr-3">Div / HQ / State</th>
                 <th class="py-2 pr-3">Progress</th>
                 <th class="py-2 pr-3">Approval</th>
@@ -2504,25 +2582,35 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
-              ${empList.map(emp => `
+              ${empList.map(emp => {
+                const isRestricted = (state.restrictedIds || []).includes(emp.empId);
+                const statusBadge = isRestricted
+                  ? '<span class="px-2 py-0.5 rounded-full bg-rose-200 text-rose-900 font-bold">Restricted</span>'
+                  : emp.blocked
+                    ? '<span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-bold">Blocked</span>'
+                    : '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Active</span>';
+                return `
                 <tr>
-                  <td class="py-2.5 pr-3 font-bold text-[#0B1F3A]">${emp.empId || '—'}</td>
+                  <td class="py-2.5 pr-3 font-bold text-[#0B1F3A] whitespace-nowrap">${emp.empId || '—'}</td>
                   <td class="py-2.5 pr-3"><div class="font-bold text-slate-900">${emp.name}</div><div class="text-slate-500">${emp.designation}</div></td>
-                  <td class="py-2.5 pr-3">${emp.division || '—'} · ${emp.hq || '—'} · ${emp.region}</td>
-                  <td class="py-2.5 pr-3 font-semibold">${emp.completedCount || 0}/${emp.totalModules || state.modules.length} (${emp.avgScore !== null && emp.avgScore !== undefined ? emp.avgScore + '%' : '—'})</td>
+                  <td class="py-2.5 pr-3"><div class="text-slate-800">${emp.email || '—'}</div><div class="text-slate-500">${emp.phone || '—'}</div></td>
+                  <td class="py-2.5 pr-3">${emp.division || '—'} · ${emp.hq || '—'} · ${emp.region || '—'}</td>
+                  <td class="py-2.5 pr-3 font-semibold whitespace-nowrap">${emp.completedCount || 0}/${emp.totalModules || state.modules.length} (${emp.avgScore !== null && emp.avgScore !== undefined ? emp.avgScore + '%' : '—'})</td>
                   <td class="py-2.5 pr-3">
                     ${emp.approved === true
                       ? `<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">✓ Approved</span>`
                       : `<button type="button" data-approve-emp="${emp.empId}" class="px-2.5 py-1 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold">Approve</button>`}
                   </td>
-                  <td class="py-2.5 pr-3">${emp.blocked ? '<span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-bold">Blocked</span>' : '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Active</span>'}</td>
-                  <td class="py-2.5 flex gap-1.5">
+                  <td class="py-2.5 pr-3">${statusBadge}</td>
+                  <td class="py-2.5 flex flex-wrap gap-1.5">
                     ${emp.approved === true ? `<button type="button" data-revoke-approve="${emp.empId}" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-bold">Revoke</button>` : ''}
-                    <button type="button" data-toggle-block="${emp.empId}" class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 font-bold">${emp.blocked ? 'Unblock' : 'Block'}</button>
-                    <button type="button" data-remove-emp="${emp.empId}" class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-800 font-bold">Remove</button>
+                    <button type="button" data-toggle-block="${emp.empId}" class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 font-bold">${emp.blocked ? 'Active' : 'Block'}</button>
+                    <button type="button" data-restrict-emp="${emp.empId}" class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-800 font-bold">${isRestricted ? 'Unrestrict' : 'Restrict'}</button>
+                    <button type="button" data-remove-emp="${emp.empId}" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold">Remove</button>
                   </td>
                 </tr>
-              `).join('')}
+              `;
+              }).join('')}
             </tbody>
           </table>
         `;
@@ -2565,6 +2653,23 @@
               renderAdmin();
               showToast(`Employee ${eid} ${state.employees[eid].blocked ? 'blocked' : 'unblocked'}.`, 'warn');
             }
+          });
+        });
+        wrap.querySelectorAll('[data-restrict-emp]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const eid = btn.dataset.restrictEmp;
+            if (!Array.isArray(state.restrictedIds)) state.restrictedIds = [];
+            if (state.restrictedIds.includes(eid)) {
+              state.restrictedIds = state.restrictedIds.filter(x => x !== eid);
+              if (state.employees[eid]) state.employees[eid].blocked = false;
+              showToast(`Restriction removed for ${eid}.`, 'info');
+            } else {
+              state.restrictedIds.push(eid);
+              if (state.employees[eid]) state.employees[eid].blocked = true;
+              showToast(`Employee ${eid} permanently restricted.`, 'warn');
+            }
+            saveState(true);
+            renderAdmin();
           });
         });
         wrap.querySelectorAll('[data-remove-emp]').forEach(btn => {
@@ -3326,6 +3431,9 @@
     });
 
     document.getElementById('btn-sync-now').addEventListener('click', () => {
+      pullStateFromCloud(false);
+    });
+    document.getElementById('btn-top-sync-now').addEventListener('click', () => {
       pullStateFromCloud(false);
     });
 
