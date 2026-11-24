@@ -125,6 +125,27 @@
       border-radius: 2px;
       animation: confettiFall linear forwards;
     }
+    .ms-wrap { position: relative; }
+    .ms-trigger {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 9px 12px; border-radius: 12px; border: 1px solid #e2e8f0; background: #fff;
+      font-size: 12px; font-weight: 600; color: #1e293b; cursor: pointer; text-align: left;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .ms-trigger:hover { border-color: #0d9488; }
+    .ms-panel {
+      position: absolute; z-index: 60; left: 0; right: 0; top: calc(100% + 4px);
+      background: #fff; border: 1px solid #cbd5e1; border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14); padding: 8px;
+      min-width: 220px;
+    }
+    .ms-list { max-height: 190px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
+    .ms-opt {
+      display: flex; align-items: center; gap: 7px; padding: 5px 8px; border-radius: 8px;
+      font-size: 12px; color: #1e293b; cursor: pointer; user-select: none;
+    }
+    .ms-opt:hover { background: #f0fdfa; }
+    .ms-opt-all { background: #f0fdfa; border: 1px solid #ccfbf1; font-weight: 700; color: #0f766e; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -271,245 +292,25 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="reg-region" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">State *</label>
-              <input id="reg-region" list="indian-states-list" type="text" required placeholder="Select or type your state"
-                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-600 focus:ring-2 focus:ring-teal-100 outline-none text-sm bg-white transition" />
-              <datalist id="indian-states-list">
-                <option value="Andhra Pradesh"></option>
-                <option value="Arunachal Pradesh"></option>
-                <option value="Assam"></option>
-                <option value="Bihar"></option>
-                <option value="Chhattisgarh"></option>
-                <option value="Goa"></option>
-                <option value="Gujarat"></option>
-                <option value="Haryana"></option>
-                <option value="Himachal Pradesh"></option>
-                <option value="Jharkhand"></option>
-                <option value="Karnataka"></option>
-                <option value="Kerala"></option>
-                <option value="Madhya Pradesh"></option>
-                <option value="Maharashtra"></option>
-                <option value="Manipur"></option>
-                <option value="Meghalaya"></option>
-                <option value="Mizoram"></option>
-                <option value="Nagaland"></option>
-                <option value="Odisha"></option>
-                <option value="Punjab"></option>
-                <option value="Rajasthan"></option>
-                <option value="Sikkim"></option>
-                <option value="Tamil Nadu"></option>
-                <option value="Telangana"></option>
-                <option value="Tripura"></option>
-                <option value="Uttar Pradesh"></option>
-                <option value="Uttarakhand"></option>
-                <option value="West Bengal"></option>
-                <option value="Andaman & Nicobar Islands"></option>
-                <option value="Chandigarh"></option>
-                <option value="Dadra & Nagar Haveli and Daman & Diu"></option>
-                <option value="Delhi (NCT)"></option>
-                <option value="Jammu & Kashmir"></option>
-                <option value="Ladakh"></option>
-                <option value="Lakshadweep"></option>
-                <option value="Puducherry"></option>
-              </datalist>
+              <select id="reg-region" required
+                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-600 focus:ring-2 focus:ring-teal-100 outline-none text-sm bg-white transition">
+                <option value="">Select State</option>
+                <option value="Tamil Nadu SKN">Tamil Nadu SKN</option>
+                <option value="TN SKAN">TN SKAN</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Jharkhand">Jharkhand</option>
+              </select>
             </div>
 
             <div>
               <label for="reg-hq" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Head Quarter *</label>
               <select id="reg-hq" required
                 class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-teal-600 focus:ring-2 focus:ring-teal-100 outline-none text-sm bg-white transition">
-                <option value="">Select Head Quarter</option>
-                <option value="Adilabad">Adilabad</option>
-                <option value="Ameerpet">Ameerpet</option>
-                <option value="Ananthapur 1">Ananthapur 1</option>
-                <option value="Ananthapur 2">Ananthapur 2</option>
-                <option value="Angul">Angul</option>
-                <option value="Arumbakkam Skn">Arumbakkam Skn</option>
-                <option value="Avadi Skn">Avadi Skn</option>
-                <option value="Bagalkot">Bagalkot</option>
-                <option value="Balangir">Balangir</option>
-                <option value="Balasore">Balasore</option>
-                <option value="Bargarh">Bargarh</option>
-                <option value="Belgaum 1">Belgaum 1</option>
-                <option value="Belgaum 2">Belgaum 2</option>
-                <option value="Berhampur 1">Berhampur 1</option>
-                <option value="Berhampur 2">Berhampur 2</option>
-                <option value="Bhadrak">Bhadrak</option>
-                <option value="Bhimmavaram">Bhimmavaram</option>
-                <option value="Bhubhaneswar - 2">Bhubhaneswar - 2</option>
-                <option value="Bhubhaneswar 1">Bhubhaneswar 1</option>
-                <option value="Bidar">Bidar</option>
-                <option value="Bijappur & Jamkandi">Bijappur & Jamkandi</option>
-                <option value="Calicut">Calicut</option>
-                <option value="Central City">Central City</option>
-                <option value="Chengalpat Skn">Chengalpat Skn</option>
-                <option value="Chickbalapur">Chickbalapur</option>
-                <option value="Chitradurga">Chitradurga</option>
-                <option value="Chittoor">Chittoor</option>
-                <option value="Chromepet Skn">Chromepet Skn</option>
-                <option value="Chrompet Skan">Chrompet Skan</option>
-                <option value="City Area Belt">City Area Belt</option>
-                <option value="Coimbatore I Skn">Coimbatore I Skn</option>
-                <option value="Coimbatore II Skn">Coimbatore II Skn</option>
-                <option value="Coimbatore III Skn">Coimbatore III Skn</option>
-                <option value="Cuddalore Skn">Cuddalore Skn</option>
-                <option value="Cuddapah">Cuddapah</option>
-                <option value="Cumbum Skn">Cumbum Skn</option>
-                <option value="Cuttack 1">Cuttack 1</option>
-                <option value="Cuttack 2">Cuttack 2</option>
-                <option value="Davangere">Davangere</option>
-                <option value="Deoghar">Deoghar</option>
-                <option value="Dharmapuri Skan">Dharmapuri Skan</option>
-                <option value="Dhenkanal">Dhenkanal</option>
-                <option value="Dilst Nagar">Dilst Nagar</option>
-                <option value="Dindugal - 2 Skn">Dindugal - 2 Skn</option>
-                <option value="Dindugal Skan">Dindugal Skan</option>
-                <option value="Dindugal Skn">Dindugal Skn</option>
-                <option value="Eluru">Eluru</option>
-                <option value="Ernakulam">Ernakulam</option>
-                <option value="Erode Skan">Erode Skan</option>
-                <option value="Erode Skn">Erode Skn</option>
-                <option value="Gadag">Gadag</option>
-                <option value="Gadhinglaj">Gadhinglaj</option>
-                <option value="Gadwal">Gadwal</option>
-                <option value="Gangavathi">Gangavathi</option>
-                <option value="Godda">Godda</option>
-                <option value="Gokak">Gokak</option>
-                <option value="Gopicheetipalayam Skn">Gopicheetipalayam Skn</option>
-                <option value="Gudiyatham Skn">Gudiyatham Skn</option>
-                <option value="Guntur">Guntur</option>
-                <option value="Hassan 1">Hassan 1</option>
-                <option value="Hassan 2">Hassan 2</option>
-                <option value="Hosur Skn">Hosur Skn</option>
-                <option value="Hsr Layout Belt & Jayanagar">Hsr Layout Belt & Jayanagar</option>
-                <option value="Hubli">Hubli</option>
-                <option value="Kakinada">Kakinada</option>
-                <option value="Kamanahalli Belt">Kamanahalli Belt</option>
-                <option value="Kamareddy">Kamareddy</option>
-                <option value="Kancheepuram Skan">Kancheepuram Skan</option>
-                <option value="Kancheepuram Skn">Kancheepuram Skn</option>
-                <option value="Karimnagar">Karimnagar</option>
-                <option value="Karur Skn">Karur Skn</option>
-                <option value="Kasargod">Kasargod</option>
-                <option value="Kattappana">Kattappana</option>
-                <option value="Khammam">Khammam</option>
-                <option value="Kolar">Kolar</option>
-                <option value="Kollam">Kollam</option>
-                <option value="Kottayam">Kottayam</option>
-                <option value="Kovilpatti Skn">Kovilpatti Skn</option>
-                <option value="Krishnagiri Skan">Krishnagiri Skan</option>
-                <option value="Krishnagiri 1 Skn">Krishnagiri 1 Skn</option>
-                <option value="Krishnagiri 2 Skn">Krishnagiri 2 Skn</option>
-                <option value="Kudal">Kudal</option>
-                <option value="Kukatpally">Kukatpally</option>
-                <option value="Kumbakonam Skn">Kumbakonam Skn</option>
-                <option value="Kumbakonam Skan">Kumbakonam Skan</option>
-                <option value="Kurnool">Kurnool</option>
-                <option value="Lb Nagar">Lb Nagar</option>
-                <option value="Madurai - I Skn">Madurai - I Skn</option>
-                <option value="Madurai - II Skn">Madurai - II Skn</option>
-                <option value="Madurai Skan">Madurai Skan</option>
-                <option value="Madurai III Skn">Madurai III Skn</option>
-                <option value="Madurai Iv Skn">Madurai Iv Skn</option>
-                <option value="Manjeri">Manjeri</option>
-                <option value="Mannargudi Skn">Mannargudi Skn</option>
-                <option value="Markapur">Markapur</option>
-                <option value="Mehaub Nagar">Mehaub Nagar</option>
-                <option value="Mylapore Skn">Mylapore Skn</option>
-                <option value="Mysore 1">Mysore 1</option>
-                <option value="Nagercoil Skan">Nagercoil Skan</option>
-                <option value="Nagerkoil 1 Skn">Nagerkoil 1 Skn</option>
-                <option value="Nagerkoil 2 Skn">Nagerkoil 2 Skn</option>
-                <option value="Nalgonda">Nalgonda</option>
-                <option value="Namakkal Skn">Namakkal Skn</option>
-                <option value="Nandyal">Nandyal</option>
-                <option value="Nellore">Nellore</option>
-                <option value="Nellore 2">Nellore 2</option>
-                <option value="Nizamabad">Nizamabad</option>
-                <option value="Old City">Old City</option>
-                <option value="Ongole">Ongole</option>
-                <option value="Pakur">Pakur</option>
-                <option value="Palakkad">Palakkad</option>
-                <option value="Peenya Belt">Peenya Belt</option>
-                <option value="Perambalur Skan">Perambalur Skan</option>
-                <option value="Pollachi Skn">Pollachi Skn</option>
-                <option value="Pondicherry Skan">Pondicherry Skan</option>
-                <option value="Pondichery Skn">Pondichery Skn</option>
-                <option value="Porur Skn">Porur Skn</option>
-                <option value="Porur 2 Skn">Porur 2 Skn</option>
-                <option value="Porur Skan">Porur Skan</option>
-                <option value="Pudukottai Skan">Pudukottai Skan</option>
-                <option value="Pudukottai Skn">Pudukottai Skn</option>
-                <option value="Purasawalkam Skn">Purasawalkam Skn</option>
-                <option value="Rajamundry">Rajamundry</option>
-                <option value="Ramnad Skn">Ramnad Skn</option>
-                <option value="Ranipet Skn">Ranipet Skn</option>
-                <option value="Redhills Skn">Redhills Skn</option>
-                <option value="Sahibganj">Sahibganj</option>
-                <option value="Saidapet Skan">Saidapet Skan</option>
-                <option value="Saidapet Skn">Saidapet Skn</option>
-                <option value="Salem 1 Skan">Salem 1 Skan</option>
-                <option value="Salem 2 Skan">Salem 2 Skan</option>
-                <option value="Salem I Skn">Salem I Skn</option>
-                <option value="Salem II Skn">Salem II Skn</option>
-                <option value="Salem III Skn">Salem III Skn</option>
-                <option value="Sambalpur">Sambalpur</option>
-                <option value="Secunderabad">Secunderabad</option>
-                <option value="Shimoga">Shimoga</option>
-                <option value="Sirkali - Interior Skan">Sirkali - Interior Skan</option>
-                <option value="Sirkali Skn">Sirkali Skn</option>
-                <option value="Sirkali - Town Skan">Sirkali - Town Skan</option>
-                <option value="Sirsi">Sirsi</option>
-                <option value="Srikakulam">Srikakulam</option>
-                <option value="Srivilliputhur Skan">Srivilliputhur Skan</option>
-                <option value="Srivilliputhur Skn">Srivilliputhur Skn</option>
-                <option value="T.V.Malai Skan">T.V.Malai Skan</option>
-                <option value="Tanjore 2 Skn">Tanjore 2 Skn</option>
-                <option value="Tanjore Skan">Tanjore Skan</option>
-                <option value="Tanjore Skn">Tanjore Skn</option>
-                <option value="Tanuku">Tanuku</option>
-                <option value="Tenkasi Skn">Tenkasi Skn</option>
-                <option value="Theni Skan">Theni Skan</option>
-                <option value="Theni Skn">Theni Skn</option>
-                <option value="Thenkasi Skan">Thenkasi Skan</option>
-                <option value="Thiruvanmiyur Skn">Thiruvanmiyur Skn</option>
-                <option value="Thrissur">Thrissur</option>
-                <option value="Tindivanam Skn">Tindivanam Skn</option>
-                <option value="Tirunelveli 2 Skn">Tirunelveli 2 Skn</option>
-                <option value="Tirunelveli Skan">Tirunelveli Skan</option>
-                <option value="Tirunelveli-I Skn">Tirunelveli-I Skn</option>
-                <option value="Tirupathi">Tirupathi</option>
-                <option value="Tiruppathur Skan">Tiruppathur Skan</option>
-                <option value="Tiruppathur Skn">Tiruppathur Skn</option>
-                <option value="Tiruppur Skn">Tiruppur Skn</option>
-                <option value="Tiruvandram">Tiruvandram</option>
-                <option value="Tiruvannamalai Skn">Tiruvannamalai Skn</option>
-                <option value="Tiruvarur Skn">Tiruvarur Skn</option>
-                <option value="Tiruvarur Skan">Tiruvarur Skan</option>
-                <option value="Tondiarpet - 1 Skn">Tondiarpet - 1 Skn</option>
-                <option value="Tondiarpet - 2 Skn">Tondiarpet - 2 Skn</option>
-                <option value="Tondiarpet Skan">Tondiarpet Skan</option>
-                <option value="Trichy Skan">Trichy Skan</option>
-                <option value="Trichy I Skn">Trichy I Skn</option>
-                <option value="Trichy- II Skn">Trichy- II Skn</option>
-                <option value="Triplicane Skn">Triplicane Skn</option>
-                <option value="Tutricorin Skn">Tutricorin Skn</option>
-                <option value="Velachery Skan">Velachery Skan</option>
-                <option value="Velachery Skn">Velachery Skn</option>
-                <option value="Vellore Skan">Vellore Skan</option>
-                <option value="Vellore Skn">Vellore Skn</option>
-                <option value="Vijayanagaram">Vijayanagaram</option>
-                <option value="Vijayawada 1">Vijayawada 1</option>
-                <option value="Vijayawada 2">Vijayawada 2</option>
-                <option value="Villivakkam Skn">Villivakkam Skn</option>
-                <option value="Villupuram Skan">Villupuram Skan</option>
-                <option value="Villupuram Skn">Villupuram Skn</option>
-                <option value="Virudhachalam Skan">Virudhachalam Skan</option>
-                <option value="Virudhachalam Skn">Virudhachalam Skn</option>
-                <option value="Virudhunagar Skan">Virudhunagar Skan</option>
-                <option value="Viruthunagar Skn">Viruthunagar Skn</option>
-                <option value="Vizag">Vizag</option>
-                <option value="Warangal">Warangal</option>
-                <option value="White Field">White Field</option>
+                <option value="">Select State First</option>
               </select>
             </div>
           </div>
@@ -982,24 +783,38 @@
           <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-5 sm:p-6 space-y-3">
             <h3 class="text-lg font-extrabold text-slate-900">📢 Send Alerts, Notifications &amp; Special Instructions</h3>
             <form id="admin-alert-form" class="space-y-3">
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <select id="adm-alert-type" class="px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none">
-                  <option value="Alert">🚨 Urgent Alert</option>
-                  <option value="Notification">🔔 Notification</option>
-                  <option value="Special Instruction">📌 Special Instruction</option>
-                </select>
-                <select id="adm-alert-scope" class="px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none font-semibold">
-                  <option value="ALL">All Employees</option>
-                  <option value="DIVISION">Division-wise (SKAN / SKN)</option>
-                  <option value="HQ">HQ-wise</option>
-                  <option value="STATE">State-wise</option>
-                  <option value="EMPLOYEE">Individual Employee</option>
-                </select>
-                <select id="adm-alert-target" class="hidden px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none">
-                </select>
-                <select id="adm-alert-hq-sub" class="hidden px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none">
-                  <option value="">Full State (All HQs in State)</option>
-                </select>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Type</label>
+                  <select id="adm-alert-type" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none">
+                    <option value="Alert">🚨 Urgent Alert</option>
+                    <option value="Notification">🔔 Notification</option>
+                    <option value="Special Instruction">📌 Special Instruction</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Target Audience</label>
+                  <select id="adm-alert-scope" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none font-semibold">
+                    <option value="ALL">All Employees</option>
+                    <option value="STATE">State-wise (Multi-Select + HQ)</option>
+                    <option value="HQ">HQ-wise (Multi-Select)</option>
+                    <option value="EMPLOYEE">Individual Employees (Multi-Select)</option>
+                  </select>
+                </div>
+              </div>
+              <div id="adm-alert-targets-row" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                <div id="adm-alert-states-wrap" class="hidden">
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Select State(s) (Multiple allowed)</label>
+                  <div id="adm-alert-states-ms"></div>
+                </div>
+                <div id="adm-alert-hqs-wrap" class="hidden">
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Select Head Quarter(s) (All HQs or Multiple)</label>
+                  <div id="adm-alert-hqs-ms"></div>
+                </div>
+                <div id="adm-alert-emps-wrap" class="hidden sm:col-span-2">
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Select Individual Employee(s) (Multiple allowed)</label>
+                  <div id="adm-alert-emps-ms"></div>
+                </div>
               </div>
               <input id="adm-alert-msg" type="text" required placeholder="Type alert, notification, or special instruction..."
                 class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-teal-600" />
@@ -1073,74 +888,23 @@
                 </select>
               </div>
 
-              <!-- HQ Dropdown (enabled when Division is selected) -->
-              <div id="adm-mod-hq-wrap" class="hidden p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <label class="text-xs font-bold text-slate-700">HQ Allotment (Enable for All HQs or Specific HQs)</label>
-                  <select id="adm-mod-hq-mode" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-bold">
-                    <option value="ALL">All HQs in Selected Division</option>
-                    <option value="SPECIFIC">Select Specific HQs</option>
-                  </select>
-                </div>
-                <div id="adm-mod-hq-picker" class="hidden space-y-2">
-                  <div class="flex items-center gap-2">
-                    <input id="adm-mod-hq-search" type="text" placeholder="Search HQ name..."
-                      class="flex-1 px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-xs outline-none focus:border-teal-600" />
-                    <button type="button" id="btn-hq-select-all" class="px-2.5 py-1.5 rounded-lg bg-teal-100 text-teal-800 text-[11px] font-bold">All</button>
-                    <button type="button" id="btn-hq-clear-all" class="px-2.5 py-1.5 rounded-lg bg-slate-200 text-slate-700 text-[11px] font-bold">Clear</button>
-                  </div>
-                  <div id="adm-mod-hq-checklist" class="max-h-40 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 gap-1.5 p-2 bg-white rounded-xl border border-slate-200 text-xs"></div>
-                </div>
-              </div>
-
-              <!-- Optional State & Individual Employee Targeting -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Multi-Select State, HQ (Cascading + All HQs), & Individual Employees -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
                 <div>
-                  <label class="block text-xs font-bold text-slate-600 mb-1">Target State (Optional — leave All for every state)</label>
-                  <select id="adm-mod-state" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none focus:border-teal-600">
-                    <option value="">All States</option>
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-<option value="Arunachal Pradesh">Arunachal Pradesh</option>
-<option value="Assam">Assam</option>
-<option value="Bihar">Bihar</option>
-<option value="Chhattisgarh">Chhattisgarh</option>
-<option value="Goa">Goa</option>
-<option value="Gujarat">Gujarat</option>
-<option value="Haryana">Haryana</option>
-<option value="Himachal Pradesh">Himachal Pradesh</option>
-<option value="Jharkhand">Jharkhand</option>
-<option value="Karnataka">Karnataka</option>
-<option value="Kerala">Kerala</option>
-<option value="Madhya Pradesh">Madhya Pradesh</option>
-<option value="Maharashtra">Maharashtra</option>
-<option value="Manipur">Manipur</option>
-<option value="Meghalaya">Meghalaya</option>
-<option value="Mizoram">Mizoram</option>
-<option value="Nagaland">Nagaland</option>
-<option value="Odisha">Odisha</option>
-<option value="Punjab">Punjab</option>
-<option value="Rajasthan">Rajasthan</option>
-<option value="Sikkim">Sikkim</option>
-<option value="Tamil Nadu">Tamil Nadu</option>
-<option value="Telangana">Telangana</option>
-<option value="Tripura">Tripura</option>
-<option value="Uttar Pradesh">Uttar Pradesh</option>
-<option value="Uttarakhand">Uttarakhand</option>
-<option value="West Bengal">West Bengal</option>
-<option value="Andaman & Nicobar Islands">Andaman & Nicobar Islands</option>
-<option value="Chandigarh">Chandigarh</option>
-<option value="Dadra & Nagar Haveli and Daman & Diu">Dadra & Nagar Haveli and Daman & Diu</option>
-<option value="Delhi (NCT)">Delhi (NCT)</option>
-<option value="Jammu & Kashmir">Jammu & Kashmir</option>
-<option value="Ladakh">Ladakh</option>
-<option value="Lakshadweep">Lakshadweep</option>
-<option value="Puducherry">Puducherry</option>
-                  </select>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Target State(s) (Multi-Select)</label>
+                  <div id="adm-mod-states-ms"></div>
+                  <p class="text-[10px] text-slate-500 mt-1">Tap to select 1, 4, or all states at once.</p>
                 </div>
                 <div>
-                  <label class="block text-xs font-bold text-slate-600 mb-1">Specific Employee IDs (Optional, comma-separated)</label>
-                  <input id="adm-mod-empids" type="text" placeholder="e.g., SKN-101, SKN-102 (leave blank for all)"
-                    class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-teal-600 uppercase" />
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Target Head Quarter(s) (All HQs or Multi-Select)</label>
+                  <div id="adm-mod-hqs-ms"></div>
+                  <p class="text-[10px] text-slate-500 mt-1">Updates automatically from selected State(s).</p>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 mb-1">Individual Employee(s) (Multi-Select)</label>
+                  <div id="adm-mod-emps-ms"></div>
+                  <input id="adm-mod-empids" type="text" placeholder="Or type Emp IDs (e.g., SKN-101, SKN-102)"
+                    class="mt-1.5 w-full px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs outline-none focus:border-teal-600 uppercase" />
                 </div>
               </div>
 
@@ -1194,6 +958,7 @@
                   <select id="adm-excel-quiz-mode" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs bg-white outline-none font-semibold">
                     <option value="append">Add to Existing Quiz</option>
                     <option value="replace">Replace Existing Quiz</option>
+                    <option value="new_page">Create New Page of Quiz</option>
                   </select>
                 </div>
                 <div>
@@ -1202,23 +967,32 @@
                 </div>
               </div>
               <div id="adm-excel-new-mod-fields" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-2xl bg-teal-50/70 border border-teal-200">
-                <input id="adm-excel-new-title" type="text" placeholder="New Module Title (e.g., Module 3: Product Quiz)"
+                <input id="adm-excel-new-title" type="text" placeholder="New Quiz Page / Module Title (e.g., Module 3: Product Quiz)"
                   class="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs outline-none focus:border-teal-600" />
                 <input id="adm-excel-new-desc" type="text" placeholder="Short Description (optional)"
                   class="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs outline-none focus:border-teal-600" />
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <select id="adm-excel-div" class="px-3 py-2.5 rounded-xl border border-slate-200 text-xs bg-white font-semibold outline-none">
-                  <option value="ALL">Allot: SKAN &amp; SKN</option>
-                  <option value="SKN">Allot: SKN</option>
-                  <option value="SKAN">Allot: SKAN</option>
-                </select>
-                <select id="adm-excel-state" class="px-3 py-2.5 rounded-xl border border-slate-200 text-xs bg-white outline-none">
-                  <option value="">All States (Full Country)</option>
-                </select>
-                <select id="adm-excel-hq" class="px-3 py-2.5 rounded-xl border border-slate-200 text-xs bg-white outline-none">
-                  <option value="">All HQs in State</option>
-                </select>
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Division</label>
+                  <select id="adm-excel-div" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white font-semibold outline-none">
+                    <option value="ALL">Allot: SKAN &amp; SKN</option>
+                    <option value="SKN">Allot: SKN</option>
+                    <option value="SKAN">Allot: SKAN</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Allot State(s) (Multi-Select)</label>
+                  <div id="adm-excel-states-ms"></div>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Allot Head Quarter(s) (Multi-Select)</label>
+                  <div id="adm-excel-hqs-ms"></div>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Allot Individual(s) (Multi-Select)</label>
+                  <div id="adm-excel-emps-ms"></div>
+                </div>
               </div>
               <div class="flex flex-wrap gap-2">
                 <button type="submit" class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold shadow transition">
@@ -1338,8 +1112,18 @@
               <p class="text-xs text-slate-500">Add new HQs under any State—automatically updates Registration, Module Allotment, Alerts, and Q&amp;A.</p>
             </div>
             <form id="admin-add-hq-form" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <input id="adm-new-hq-state" list="indian-states-list" type="text" required placeholder="State (e.g., Tamil Nadu)"
-                class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-teal-600" />
+              <select id="adm-new-hq-state" required
+                class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-white outline-none focus:border-teal-600">
+                <option value="">Select State *</option>
+                <option value="Tamil Nadu SKN">Tamil Nadu SKN</option>
+                <option value="TN SKAN">TN SKAN</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Jharkhand">Jharkhand</option>
+              </select>
               <input id="adm-new-hq-name" type="text" required placeholder="New HQ Name"
                 class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-teal-600" />
               <button type="submit" class="px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold shadow transition">
@@ -1569,7 +1353,26 @@
       }
     ];
 
-    const DEFAULT_STATE_HQ_MAP = {"Tamil Nadu": ["Velachery Skn", "Chromepet Skn", "Pondichery Skn", "Villupuram Skn", "Cuddalore Skn", "Tindivanam Skn", "Sirkali Skn", "Purasawalkam Skn", "Arumbakkam Skn", "Chengalpat Skn", "Triplicane Skn", "Mylapore Skn", "Thiruvanmiyur Skn", "Kancheepuram Skn", "Virudhachalam Skn", "Villivakkam Skn", "Redhills Skn", "Porur Skn", "Porur 2 Skn", "Avadi Skn", "Tondiarpet - 1 Skn", "Tondiarpet - 2 Skn", "Saidapet Skn", "Theni Skn", "Cumbum Skn", "Ramnad Skn", "Tirunelveli-I Skn", "Tenkasi Skn", "Tutricorin Skn", "Tirunelveli 2 Skn", "Kovilpatti Skn", "Viruthunagar Skn", "Madurai - I Skn", "Madurai - II Skn", "Madurai III Skn", "Madurai Iv Skn", "Dindugal Skn", "Dindugal - 2 Skn", "Karur Skn", "Trichy I Skn", "Trichy- II Skn", "Nagerkoil 1 Skn", "Nagerkoil 2 Skn", "Kumbakonam Skn", "Mannargudi Skn", "Tanjore Skn", "Tanjore 2 Skn", "Srivilliputhur Skn", "Tiruvarur Skn", "Pudukottai Skn", "Ranipet Skn", "Salem I Skn", "Salem II Skn", "Salem III Skn", "Tiruppur Skn", "Erode Skn", "Gopicheetipalayam Skn", "Coimbatore I Skn", "Coimbatore II Skn", "Coimbatore III Skn", "Tiruvannamalai Skn", "Vellore Skn", "Gudiyatham Skn", "Namakkal Skn", "Krishnagiri 1 Skn", "Krishnagiri 2 Skn", "Tiruppathur Skn", "Hosur Skn", "Pollachi Skn", "Krishnagiri Skan", "Dharmapuri Skan", "Tiruppathur Skan", "Vellore Skan", "T.V.Malai Skan", "Salem 1 Skan", "Salem 2 Skan", "Erode Skan", "Kancheepuram Skan", "Velachery Skan", "Chrompet Skan", "Pudukottai Skan", "Theni Skan", "Virudhunagar Skan", "Porur Skan", "Saidapet Skan", "Villupuram Skan", "Pondicherry Skan", "Srivilliputhur Skan", "Thenkasi Skan Skan", "Virudhachalam Skan", "Sirkali - Town Skan", "Sirkali - Interior Skan", "Kumbakonam Skan", "Tiruvarur Skan", "Tanjore Skan", "Tondiarpet Skan", "Perambalur Skan", "Madurai Skan", "Nagercoil Skan", "Tirunelveli Skan", "Trichy Skan", "Dindugal Skan"], "Puducherry": ["Pondichery Skn", "Pondicherry Skan"], "Karnataka": ["Kamanahalli Belt", "City Area Belt", "Hsr Layout Belt & Jayanagar", "Peenya Belt", "White Field", "Kolar", "Chickbalapur", "Mysore 1", "Hassan 1", "Hassan 2", "Shimoga", "Chitradurga", "Davangere", "Belgaum 1", "Belgaum 2", "Bijappur & Jamkandi", "Gokak", "Hubli", "Bagalkot", "Gadag", "Bidar", "Gangavathi", "Sirsi", "Gadhinglaj (Maharastra)", "Kudal (Maharastra)"], "Maharashtra": ["Gadhinglaj (Maharastra)", "Kudal (Maharastra)"], "Andhra Pradesh": ["Ananthapur 1", "Ananthapur 2", "Cuddapah", "Srikakulam", "Kurnool", "Kakinada", "Bhimmavaram", "Vijayawada 1", "Vijayawada 2", "Vizag", "Nandyal", "Nellore", "Chittoor", "Eluru", "Guntur", "Vijayanagaram", "Ongole", "Markapur", "Tirupathi", "Rajamundry", "Tanuku", "Nellore 2", "Mehaub Nagar", "Gadwal", "Karimnagar", "Nalgonda", "Warangal", "Khammam", "Nizamabad", "Kamareddy", "Adilabad", "Kukatpally", "Secunderabad", "Ameerpet", "Dilst Nagar", "Old City", "Lb Nagar", "Central City"], "Telangana": ["Mehaub Nagar", "Gadwal", "Karimnagar", "Nalgonda", "Warangal", "Khammam", "Nizamabad", "Kamareddy", "Adilabad", "Kukatpally", "Secunderabad", "Ameerpet", "Dilst Nagar", "Old City", "Lb Nagar", "Central City"], "Odisha": ["Cuttack 1", "Cuttack 2", "Berhampur 1", "Berhampur 2", "Bhubhaneswar 1", "Bhubhaneswar - 2", "Balasore", "Dhenkanal", "Bargarh", "Angul", "Bhadrak", "Sambalpur", "Balangir"], "Jharkhand": ["Pakur", "Sahibganj", "Godda", "Deoghar"], "Kerala": ["Calicut", "Thrissur", "Ernakulam", "Kottayam", "Manjeri", "Kattappana", "Kollam", "Tiruvandram", "Palakkad", "Kasargod"]};
+    const STANDARD_STATES = [
+      "Tamil Nadu SKN",
+      "TN SKAN",
+      "Karnataka",
+      "Kerala",
+      "Andhra Pradesh",
+      "Odisha",
+      "Telangana",
+      "Jharkhand"
+    ];
+    const DEFAULT_STATE_HQ_MAP = {
+      "Tamil Nadu SKN": ["Velachery Skn", "Chromepet Skn", "Pondichery Skn", "Villupuram Skn", "Cuddalore Skn", "Tindivanam Skn", "Sirkali Skn", "Purasawalkam Skn", "Arumbakkam Skn", "Chengalpat Skn", "Triplicane Skn", "Mylapore Skn", "Thiruvanmiyur Skn", "Kancheepuram Skn", "Virudhachalam Skn", "Villivakkam Skn", "Redhills Skn", "Porur Skn", "Porur 2 Skn", "Avadi Skn", "Tondiarpet - 1 Skn", "Tondiarpet - 2 Skn", "Saidapet Skn", "Theni Skn", "Cumbum Skn", "Ramnad Skn", "Tirunelveli-I Skn", "Tenkasi Skn", "Tutricorin Skn", "Tirunelveli 2 Skn", "Kovilpatti Skn", "Viruthunagar Skn", "Madurai - I Skn", "Madurai - II Skn", "Madurai III Skn", "Madurai Iv Skn", "Dindugal Skn", "Dindugal - 2 Skn", "Karur Skn", "Trichy I Skn", "Trichy- II Skn", "Nagerkoil 1 Skn", "Nagerkoil 2 Skn", "Kumbakonam Skn", "Mannargudi Skn", "Tanjore Skn", "Tanjore 2 Skn", "Srivilliputhur Skn", "Tiruvarur Skn", "Pudukottai Skn", "Ranipet Skn", "Salem I Skn", "Salem II Skn", "Salem III Skn", "Tiruppur Skn", "Erode Skn", "Gopicheetipalayam Skn", "Coimbatore I Skn", "Coimbatore II Skn", "Coimbatore III Skn", "Tiruvannamalai Skn", "Vellore Skn", "Gudiyatham Skn", "Namakkal Skn", "Krishnagiri 1 Skn", "Krishnagiri 2 Skn", "Tiruppathur Skn", "Hosur Skn", "Pollachi Skn"],
+      "TN SKAN": ["Krishnagiri Skan", "Dharmapuri Skan", "Tiruppathur Skan", "Vellore Skan", "T.V.Malai Skan", "Salem 1 Skan", "Salem 2 Skan", "Erode Skan", "Kancheepuram Skan", "Velachery Skan", "Chrompet Skan", "Pudukottai Skan", "Theni Skan", "Virudhunagar Skan", "Porur Skan", "Saidapet Skan", "Villupuram Skan", "Pondicherry Skan", "Srivilliputhur Skan", "Thenkasi Skan", "Virudhachalam Skan", "Sirkali - Town Skan", "Sirkali - Interior Skan", "Kumbakonam Skan", "Tiruvarur Skan", "Tanjore Skan", "Tondiarpet Skan", "Perambalur Skan", "Madurai Skan", "Nagercoil Skan", "Tirunelveli Skan", "Trichy Skan", "Dindugal Skan"],
+      "Karnataka": ["Kamanahalli Belt", "City Area Belt", "Hsr Layout Belt & Jayanagar", "Peenya Belt", "White Field", "Kolar", "Chickbalapur", "Mysore 1", "Hassan 1", "Hassan 2", "Shimoga", "Chitradurga", "Davangere", "Belgaum 1", "Belgaum 2", "Bijappur & Jamkandi", "Gokak", "Hubli", "Bagalkot", "Gadag", "Bidar", "Gangavathi", "Sirsi", "Gadhinglaj (Maharastra)", "Kudal (Maharastra)"],
+      "Kerala": ["Calicut", "Thrissur", "Ernakulam", "Kottayam", "Manjeri", "Kattappana", "Kollam", "Tiruvandram", "Palakkad", "Kasargod"],
+      "Andhra Pradesh": ["Ananthapur 1", "Ananthapur 2", "Cuddapah", "Srikakulam", "Kurnool", "Kakinada", "Bhimmavaram", "Vijayawada 1", "Vijayawada 2", "Vizag", "Nandyal", "Nellore", "Chittoor", "Eluru", "Guntur", "Vijayanagaram", "Ongole", "Markapur", "Tirupathi", "Rajamundry", "Tanuku", "Nellore 2"],
+      "Odisha": ["Cuttack 1", "Cuttack 2", "Berhampur 1", "Berhampur 2", "Bhubhaneswar 1", "Bhubhaneswar - 2", "Balasore", "Dhenkanal", "Bargarh", "Angul", "Bhadrak", "Sambalpur", "Balangir"],
+      "Telangana": ["Mehaub Nagar", "Gadwal", "Karimnagar", "Nalgonda", "Warangal", "Khammam", "Nizamabad", "Kamareddy", "Adilabad", "Kukatpally", "Secunderabad", "Ameerpet", "Dilst Nagar", "Old City", "Lb Nagar", "Central City"],
+      "Jharkhand": ["Pakur", "Sahibganj", "Godda", "Deoghar"]
+    };
     const STATE_LIST = Object.keys(DEFAULT_STATE_HQ_MAP);
     const HQ_LIST = ["Adilabad", "Ameerpet", "Ananthapur 1", "Ananthapur 2", "Angul", "Arumbakkam Skn", "Avadi Skn", "Bagalkot", "Balangir", "Balasore", "Bargarh", "Belgaum 1", "Belgaum 2", "Berhampur 1", "Berhampur 2", "Bhadrak", "Bhimmavaram", "Bhubhaneswar - 2", "Bhubhaneswar 1", "Bidar", "Bijappur & Jamkandi", "Calicut", "Central City", "Chengalpat Skn", "Chickbalapur", "Chitradurga", "Chittoor", "Chromepet Skn", "Chrompet Skan", "City Area Belt", "Coimbatore I Skn", "Coimbatore II Skn", "Coimbatore III Skn", "Cuddalore Skn", "Cuddapah", "Cumbum Skn", "Cuttack 1", "Cuttack 2", "Davangere", "Deoghar", "Dharmapuri Skan", "Dhenkanal", "Dilst Nagar", "Dindugal - 2 Skn", "Dindugal Skan", "Dindugal Skn", "Eluru", "Ernakulam", "Erode Skan", "Erode Skn", "Gadag", "Gadhinglaj", "Gadwal", "Gangavathi", "Godda", "Gokak", "Gopicheetipalayam Skn", "Gudiyatham Skn", "Guntur", "Hassan 1", "Hassan 2", "Hosur Skn", "Hsr Layout Belt & Jayanagar", "Hubli", "Kakinada", "Kamanahalli Belt", "Kamareddy", "Kancheepuram Skan", "Kancheepuram Skn", "Karimnagar", "Karur Skn", "Kasargod", "Kattappana", "Khammam", "Kolar", "Kollam", "Kottayam", "Kovilpatti Skn", "Krishnagiri Skan", "Krishnagiri 1 Skn", "Krishnagiri 2 Skn", "Kudal", "Kukatpally", "Kumbakonam Skn", "Kumbakonam Skan", "Kurnool", "Lb Nagar", "Madurai - I Skn", "Madurai - II Skn", "Madurai Skan", "Madurai III Skn", "Madurai Iv Skn", "Manjeri", "Mannargudi Skn", "Markapur", "Mehaub Nagar", "Mylapore Skn", "Mysore 1", "Nagercoil Skan", "Nagerkoil 1 Skn", "Nagerkoil 2 Skn", "Nalgonda", "Namakkal Skn", "Nandyal", "Nellore", "Nellore 2", "Nizamabad", "Old City", "Ongole", "Pakur", "Palakkad", "Peenya Belt", "Perambalur Skan", "Pollachi Skn", "Pondicherry Skan", "Pondichery Skn", "Porur Skn", "Porur 2 Skn", "Porur Skan", "Pudukottai Skan", "Pudukottai Skn", "Purasawalkam Skn", "Rajamundry", "Ramnad Skn", "Ranipet Skn", "Redhills Skn", "Sahibganj", "Saidapet Skan", "Saidapet Skn", "Salem 1 Skan", "Salem 2 Skan", "Salem I Skn", "Salem II Skn", "Salem III Skn", "Sambalpur", "Secunderabad", "Shimoga", "Sirkali - Interior Skan", "Sirkali Skn", "Sirkali - Town Skan", "Sirsi", "Srikakulam", "Srivilliputhur Skan", "Srivilliputhur Skn", "T.V.Malai Skan", "Tanjore 2 Skn", "Tanjore Skan", "Tanjore Skn", "Tanuku", "Tenkasi Skn", "Theni Skan", "Theni Skn", "Thenkasi Skan", "Thiruvanmiyur Skn", "Thrissur", "Tindivanam Skn", "Tirunelveli 2 Skn", "Tirunelveli Skan", "Tirunelveli-I Skn", "Tirupathi", "Tiruppathur Skan", "Tiruppathur Skn", "Tiruppur Skn", "Tiruvandram", "Tiruvannamalai Skn", "Tiruvarur Skn", "Tiruvarur Skan", "Tondiarpet - 1 Skn", "Tondiarpet - 2 Skn", "Tondiarpet Skan", "Trichy Skan", "Trichy I Skn", "Trichy- II Skn", "Triplicane Skn", "Tutricorin Skn", "Velachery Skan", "Velachery Skn", "Vellore Skan", "Vellore Skn", "Vijayanagaram", "Vijayawada 1", "Vijayawada 2", "Villivakkam Skn", "Villupuram Skan", "Villupuram Skn", "Virudhachalam Skan", "Virudhachalam Skn", "Virudhunagar Skan", "Viruthunagar Skn", "Vizag", "Warangal", "White Field"];
     const DEFAULT_OWNERS = [
@@ -1622,7 +1425,13 @@
       if (!divOk) return false;
       if (Array.isArray(mod.allowedStates) && mod.allowedStates.length > 0) {
         const cState = (cand && cand.region ? cand.region : '').trim().toLowerCase();
-        if (!cState || !mod.allowedStates.some(s => s.toLowerCase() === cState)) return false;
+        const matchState = (s) => {
+          const sl = s.toLowerCase();
+          if (sl === cState) return true;
+          if (cState === 'tamil nadu' && (sl === 'tamil nadu skn' || sl === 'tn skan')) return true;
+          return false;
+        };
+        if (!cState || !mod.allowedStates.some(matchState)) return false;
       }
       return isHqAllowedForModule(mod, cand);
     }
@@ -1632,17 +1441,31 @@
     }
 
     function getStateList() {
-      return Object.keys(state.stateHqMap || DEFAULT_STATE_HQ_MAP);
+      return [...STANDARD_STATES];
     }
 
-    function getHqsForState(stateName) {
+    function getHqsForState(stateInput) {
       const map = state.stateHqMap || DEFAULT_STATE_HQ_MAP;
-      if (!stateName) {
+      if (Array.isArray(stateInput)) {
+        if (!stateInput.length) {
+          const all = new Set();
+          STANDARD_STATES.forEach(st => (map[st] || DEFAULT_STATE_HQ_MAP[st] || []).forEach(h => all.add(h)));
+          HQ_LIST.forEach(h => all.add(h));
+          return Array.from(all).sort();
+        }
+        const set = new Set();
+        stateInput.forEach(st => {
+          const arr = Array.isArray(map[st]) ? map[st] : (DEFAULT_STATE_HQ_MAP[st] || []);
+          arr.forEach(h => set.add(h));
+        });
+        return Array.from(set).sort();
+      }
+      if (!stateInput) {
         const all = new Set(HQ_LIST);
         Object.values(map).forEach(arr => (arr || []).forEach(h => all.add(h)));
         return Array.from(all).sort();
       }
-      return Array.isArray(map[stateName]) ? map[stateName] : [];
+      return Array.isArray(map[stateInput]) ? map[stateInput] : (DEFAULT_STATE_HQ_MAP[stateInput] || []);
     }
 
     function divisionBadgeLabel(div) {
@@ -1933,6 +1756,8 @@
           defaultMeta[m.id] = {
             division: m.division || 'ALL',
             allowedHqs: m.allowedHqs || [],
+            allowedStates: m.allowedStates || [],
+            allowedEmpIds: m.allowedEmpIds || [],
             deadlineDays: m.deadlineDays || null,
             dueDate: m.dueDate || null,
             quiz: m.quiz
@@ -2026,7 +1851,15 @@
       if (Array.isArray(parsed.restrictedIds)) state.restrictedIds = parsed.restrictedIds;
       if (Array.isArray(parsed.deletedEmpIds)) state.deletedEmpIds = parsed.deletedEmpIds;
       if (Array.isArray(parsed.extensionRequests)) state.extensionRequests = parsed.extensionRequests;
-      if (parsed.stateHqMap && typeof parsed.stateHqMap === 'object') state.stateHqMap = parsed.stateHqMap;
+      if (parsed.stateHqMap && typeof parsed.stateHqMap === 'object') {
+        const mergedMap = JSON.parse(JSON.stringify(DEFAULT_STATE_HQ_MAP));
+        STANDARD_STATES.forEach(st => {
+          if (Array.isArray(parsed.stateHqMap[st])) {
+            mergedMap[st] = Array.from(new Set([...mergedMap[st], ...parsed.stateHqMap[st]]));
+          }
+        });
+        state.stateHqMap = mergedMap;
+      }
       if (parsed.adminPin && typeof parsed.adminPin === 'string') {
         setAdminPin(parsed.adminPin);
       }
@@ -2042,6 +1875,8 @@
           if (meta) {
             if (meta.division) m.division = meta.division;
             if (Array.isArray(meta.allowedHqs)) m.allowedHqs = meta.allowedHqs;
+            if (Array.isArray(meta.allowedStates)) m.allowedStates = meta.allowedStates;
+            if (Array.isArray(meta.allowedEmpIds)) m.allowedEmpIds = meta.allowedEmpIds;
             if (meta.deadlineDays !== undefined) m.deadlineDays = meta.deadlineDays;
             if (meta.dueDate !== undefined) m.dueDate = meta.dueDate;
             if (Array.isArray(meta.quiz)) m.quiz = meta.quiz;
@@ -2392,12 +2227,26 @@
       // Render Alerts & Special Instructions for this employee
       const alertBox = document.getElementById('dash-alerts-box');
       const myAlerts = state.alerts.filter(a => {
+        const cEmp = (c.empId || '').trim().toUpperCase();
+        const cHq = (c.hq || '').trim().toLowerCase();
+        const cState = (c.region || '').trim().toLowerCase();
+        if (Array.isArray(a.extraEmpIds) && a.extraEmpIds.some(id => id.trim().toUpperCase() === cEmp)) return true;
         const scope = a.scope || (a.target === 'ALL' ? 'ALL' : 'EMPLOYEE');
         if (scope === 'ALL') return true;
-        if (scope === 'EMPLOYEE') return a.target === c.empId;
-        if (scope === 'DIVISION') return (a.target || '').toUpperCase() === (c.division || '').toUpperCase();
-        if (scope === 'HQ') return (a.target || '').trim().toLowerCase() === (c.hq || '').trim().toLowerCase();
-        if (scope === 'STATE') return (a.target || '').trim().toLowerCase() === (c.region || '').trim().toLowerCase();
+        const targets = Array.isArray(a.targets) ? a.targets : (a.target ? [a.target] : []);
+        if (scope === 'EMPLOYEE') return targets.some(t => t.trim().toUpperCase() === cEmp);
+        if (scope === 'DIVISION') return targets.some(t => t.trim().toUpperCase() === (c.division || '').trim().toUpperCase());
+        if (scope === 'HQ') return targets.some(t => t.trim().toLowerCase() === cHq);
+        if (scope === 'STATE') {
+          if (Array.isArray(a.hqTargets) && a.hqTargets.length > 0) {
+            return a.hqTargets.some(h => h.trim().toLowerCase() === cHq);
+          }
+          const stList = Array.isArray(a.stateTargets) ? a.stateTargets : targets;
+          return stList.some(s => {
+            const sl = s.trim().toLowerCase();
+            return sl === cState || (cState === 'tamil nadu' && (sl === 'tamil nadu skn' || sl === 'tn skan'));
+          });
+        }
         return false;
       });
       if (myAlerts.length) {
@@ -2548,25 +2397,26 @@
         btn.addEventListener('click', () => {
           const mid = btn.dataset.reqExt;
           const mod = state.modules.find(m => m.id === mid);
-          const reason = prompt(`Enter reason for extending "${mod ? mod.title : mid}":`);
-          if (!reason || !reason.trim()) return;
-          if (!Array.isArray(state.extensionRequests)) state.extensionRequests = [];
-          state.extensionRequests.push({
-            id: `ext_${Date.now()}`,
-            empId: c.empId,
-            empName: c.name,
-            designation: c.designation,
-            division: c.division,
-            hq: c.hq,
-            region: c.region,
-            modId: mid,
-            modTitle: mod ? mod.title : mid,
-            reason: reason.trim(),
-            status: 'pending',
-            createdAt: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+          openInputModal(`Enter reason for extending "${mod ? mod.title : mid}":`, '', (reason) => {
+            if (!reason || !reason.trim()) return;
+            if (!Array.isArray(state.extensionRequests)) state.extensionRequests = [];
+            state.extensionRequests.push({
+              id: `ext_${Date.now()}`,
+              empId: c.empId,
+              empName: c.name,
+              designation: c.designation,
+              division: c.division,
+              hq: c.hq,
+              region: c.region,
+              modId: mid,
+              modTitle: mod ? mod.title : mid,
+              reason: reason.trim(),
+              status: 'pending',
+              createdAt: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+            });
+            saveState(true);
+            showToast('Extension request sent to Admin!', 'success');
           });
-          saveState(true);
-          showToast('Extension request sent to Admin!', 'success');
         });
       });
     }
@@ -3071,24 +2921,23 @@
       });
     }
 
-    document.getElementById('adm-mod-state').addEventListener('change', (e) => {
-      const st = e.target.value;
-      if (st) {
-        document.getElementById('adm-mod-hq-wrap').classList.remove('hidden');
-        document.getElementById('adm-mod-hq-mode').value = 'SPECIFIC';
-        document.getElementById('adm-mod-hq-picker').classList.remove('hidden');
-        renderAddModHqChecklist('', true);
-      } else {
-        renderAddModHqChecklist('', false);
+    function populateRegHqDropdown(selectedState) {
+      const regHq = document.getElementById('reg-hq');
+      if (!regHq) return;
+      if (!selectedState) {
+        regHq.innerHTML = '<option value="">Select State First</option>';
+        return;
       }
-    });
-
-    document.getElementById('adm-excel-state').addEventListener('change', (e) => {
-      const st = e.target.value;
-      const hqSel = document.getElementById('adm-excel-hq');
-      const hqs = getHqsForState(st);
-      hqSel.innerHTML = '<option value="">All HQs in State</option>' + hqs.map(h => `<option value="${h}">${h}</option>`).join('');
-    });
+      const hqs = getHqsForState(selectedState);
+      regHq.innerHTML = '<option value="">Select Head Quarter</option>' + hqs.map(h => `<option value="${h}">${h}</option>`).join('');
+    }
+    const regStateEl = document.getElementById('reg-region');
+    if (regStateEl) {
+      regStateEl.addEventListener('change', (e) => {
+        populateRegHqDropdown(e.target.value);
+        if (typeof updateRegGuide === 'function') updateRegGuide();
+      });
+    }
 
     document.getElementById('admin-add-hq-form').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -3098,19 +2947,8 @@
       if (!state.stateHqMap) state.stateHqMap = JSON.parse(JSON.stringify(DEFAULT_STATE_HQ_MAP));
       if (!Array.isArray(state.stateHqMap[st])) state.stateHqMap[st] = [];
       if (!state.stateHqMap[st].includes(hq)) state.stateHqMap[st].push(hq);
-      const regHq = document.getElementById('reg-hq');
-      if (regHq && !Array.from(regHq.options).some(o => o.value === hq)) {
-        const opt = document.createElement('option');
-        opt.value = hq;
-        opt.textContent = hq;
-        regHq.appendChild(opt);
-      }
-      const dl = document.getElementById('indian-states-list');
-      if (dl && !Array.from(dl.options).some(o => o.value === st)) {
-        const opt = document.createElement('option');
-        opt.value = st;
-        dl.appendChild(opt);
-      }
+      const curRegState = document.getElementById('reg-region') ? document.getElementById('reg-region').value : '';
+      if (curRegState === st) populateRegHqDropdown(st);
       saveState(true);
       e.target.reset();
       renderAdmin();
@@ -3508,18 +3346,108 @@
       // Populate Alert Target Dropdown based on Classification
       updateAlertTargetOptions();
 
-      // Render Sent Alerts
+      // Render Sent Alerts with Edit & Add Person(s)
       const alertsList = document.getElementById('adm-alerts-list');
-      alertsList.innerHTML = state.alerts.slice().reverse().map(a => `
-        <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2 text-xs">
-          <div><strong class="text-rose-700">[${a.type}]</strong> (${a.target}): ${a.message}</div>
-          <button type="button" data-del-alert="${a.id}" class="text-rose-600 font-bold shrink-0">Delete</button>
+      const allEmpsArr = Object.values(state.employees || {});
+      alertsList.innerHTML = state.alerts.slice().reverse().map(a => {
+        const extraList = Array.isArray(a.extraEmpIds) && a.extraEmpIds.length
+          ? `<div class="text-[11px] text-teal-700 font-semibold mt-0.5">+ Added Recipients: ${a.extraEmpIds.join(', ')}</div>`
+          : '';
+        return `
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <div><strong class="text-rose-700">[${a.type}]</strong> <span class="font-semibold text-slate-700">(${a.target})</span>: ${a.message}</div>
+              ${extraList}
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" data-edit-alert="${a.id}" class="px-2.5 py-1 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-800 font-bold">Edit</button>
+              <button type="button" data-add-person-alert="${a.id}" class="px-2.5 py-1 rounded-lg bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-bold">+ Add Person</button>
+              <button type="button" data-del-alert="${a.id}" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold">Delete</button>
+            </div>
+          </div>
+          <div id="alert-edit-box-${a.id}" class="hidden p-2.5 rounded-xl bg-white border border-teal-200 space-y-2">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+              <select id="alert-edit-type-${a.id}" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-semibold">
+                <option value="Alert" ${a.type === 'Alert' ? 'selected' : ''}>🚨 Urgent Alert</option>
+                <option value="Notification" ${a.type === 'Notification' ? 'selected' : ''}>🔔 Notification</option>
+                <option value="Special Instruction" ${a.type === 'Special Instruction' ? 'selected' : ''}>📌 Special Instruction</option>
+              </select>
+              <input id="alert-edit-msg-${a.id}" type="text" value="${String(a.message || '').replace(/"/g, '&quot;')}" class="sm:col-span-3 px-3 py-1.5 rounded-lg border border-slate-200 outline-none focus:border-teal-600" />
+            </div>
+            <div class="flex gap-2">
+              <button type="button" data-save-alert-edit="${a.id}" class="px-3 py-1 rounded-lg bg-teal-600 text-white font-bold">Save Update</button>
+              <button type="button" data-cancel-alert-edit="${a.id}" class="px-3 py-1 rounded-lg bg-slate-200 text-slate-700 font-bold">Cancel</button>
+            </div>
+          </div>
+          <div id="alert-addp-box-${a.id}" class="hidden p-2.5 rounded-xl bg-white border border-indigo-200 space-y-2">
+            <div class="font-bold text-indigo-900">Add additional employee(s) to receive this exact notification:</div>
+            <div class="max-h-32 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-1">
+              ${allEmpsArr.length ? allEmpsArr.map(emp => {
+                const already = (Array.isArray(a.extraEmpIds) && a.extraEmpIds.includes(emp.empId)) || (Array.isArray(a.targets) && a.scope === 'EMPLOYEE' && a.targets.includes(emp.empId));
+                return `<label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" class="alert-addp-cb-${a.id}" value="${emp.empId}" ${already ? 'checked' : ''} /> <span>${emp.empId} — ${emp.name} (${emp.hq || emp.region || ''})</span></label>`;
+              }).join('') : '<div class="text-slate-500">No registered employees yet.</div>'}
+            </div>
+            <div class="flex gap-2">
+              <button type="button" data-save-alert-addp="${a.id}" class="px-3 py-1 rounded-lg bg-indigo-600 text-white font-bold">Update Recipients</button>
+              <button type="button" data-cancel-alert-addp="${a.id}" class="px-3 py-1 rounded-lg bg-slate-200 text-slate-700 font-bold">Cancel</button>
+            </div>
+          </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
+      alertsList.querySelectorAll('[data-edit-alert]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById(`alert-edit-box-${btn.dataset.editAlert}`).classList.toggle('hidden');
+        });
+      });
+      alertsList.querySelectorAll('[data-cancel-alert-edit]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById(`alert-edit-box-${btn.dataset.cancelAlertEdit}`).classList.add('hidden');
+        });
+      });
+      alertsList.querySelectorAll('[data-save-alert-edit]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const aid = btn.dataset.saveAlertEdit;
+          const al = state.alerts.find(x => x.id === aid);
+          if (!al) return;
+          const newType = document.getElementById(`alert-edit-type-${aid}`).value;
+          const newMsg = document.getElementById(`alert-edit-msg-${aid}`).value.trim();
+          if (!newMsg) { showToast('Message cannot be empty.', 'warn'); return; }
+          al.type = newType;
+          al.message = newMsg;
+          al.date = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+          saveState(true);
+          renderAdmin();
+          showToast('Notification updated!', 'success');
+        });
+      });
+      alertsList.querySelectorAll('[data-add-person-alert]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById(`alert-addp-box-${btn.dataset.addPersonAlert}`).classList.toggle('hidden');
+        });
+      });
+      alertsList.querySelectorAll('[data-cancel-alert-addp]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById(`alert-addp-box-${btn.dataset.cancelAlertAddp}`).classList.add('hidden');
+        });
+      });
+      alertsList.querySelectorAll('[data-save-alert-addp]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const aid = btn.dataset.saveAlertAddp;
+          const al = state.alerts.find(x => x.id === aid);
+          if (!al) return;
+          const chosen = Array.from(document.querySelectorAll(`.alert-addp-cb-${aid}:checked`)).map(cb => cb.value);
+          al.extraEmpIds = chosen;
+          saveState(true);
+          renderAdmin();
+          showToast('Notification recipients updated!', 'success');
+        });
+      });
       alertsList.querySelectorAll('[data-del-alert]').forEach(btn => {
         btn.addEventListener('click', () => {
           state.alerts = state.alerts.filter(x => x.id !== btn.dataset.delAlert);
-          saveState();
+          saveState(true);
           renderAdmin();
         });
       });
@@ -3687,20 +3615,26 @@
         });
       }
 
-      // Render Module Division + HQ + Deadline Allotment Manager
+      // Render Module Division + Multi-State + Multi-HQ + Multi-Employee Allotment Manager
       const modDivList = document.getElementById('adm-mod-division-list');
       if (modDivList) {
+        const allEmpsForMod = Object.values(state.employees || {});
         modDivList.innerHTML = state.modules.map(m => {
           const curDiv = (m.division || 'ALL').toUpperCase();
+          const stCount = Array.isArray(m.allowedStates) ? m.allowedStates.length : 0;
+          const stLabel = stCount ? m.allowedStates.join(', ') : 'All States';
           const hqCount = Array.isArray(m.allowedHqs) ? m.allowedHqs.length : 0;
-          const hqLabel = hqCount ? `${hqCount} Specific HQ(s)` : 'All HQs';
+          const hqLabel = hqCount ? `${hqCount} HQ(s)` : 'All HQs';
+          const empCount = Array.isArray(m.allowedEmpIds) ? m.allowedEmpIds.length : 0;
+          const empLabel = empCount ? `${empCount} Employee(s)` : 'All Employees';
           const dlText = m.dueDate ? `Due ${m.dueDate}` : m.deadlineDays ? `${m.deadlineDays} days` : 'No Limit';
+          const hqPool = getHqsForState(Array.isArray(m.allowedStates) ? m.allowedStates : []);
           return `
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <div class="font-bold text-slate-900">${m.title}</div>
-                  <div class="text-slate-500">${m.description} · <span class="font-semibold text-teal-700">${hqLabel}</span> · <span class="font-semibold text-amber-700">${dlText}</span></div>
+                  <div class="text-slate-500">${m.description} · <span class="font-semibold text-indigo-700">${stLabel}</span> · <span class="font-semibold text-teal-700">${hqLabel}</span> · <span class="font-semibold text-purple-700">${empLabel}</span> · <span class="font-semibold text-amber-700">${dlText}</span></div>
                 </div>
                 <div class="flex flex-wrap items-center gap-2 shrink-0">
                   <select data-mod-div="${m.id}" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white font-bold text-slate-700 outline-none">
@@ -3708,19 +3642,48 @@
                     <option value="SKN" ${curDiv === 'SKN' ? 'selected' : ''}>SKN Only</option>
                     <option value="ALL" ${curDiv === 'ALL' ? 'selected' : ''}>All (SKAN &amp; SKN)</option>
                   </select>
-                  <button type="button" data-toggle-hq-edit="${m.id}" class="px-2.5 py-1.5 rounded-lg bg-teal-100 text-teal-800 font-bold">Select HQs</button>
+                  <button type="button" data-toggle-hq-edit="${m.id}" class="px-2.5 py-1.5 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-800 font-bold">Edit States / HQs / People</button>
                 </div>
               </div>
-              <div id="hq-edit-panel-${m.id}" class="hidden p-2.5 bg-white rounded-xl border border-slate-200 space-y-2">
-                <div class="flex items-center justify-between gap-2">
-                  <span class="font-bold text-slate-700">Select HQs for "${m.title}" (leave none checked for All HQs):</span>
-                  <button type="button" data-save-mod-hq="${m.id}" class="px-3 py-1 rounded-lg bg-[#0B1F3A] text-white font-bold">Save HQs</button>
+              <div id="hq-edit-panel-${m.id}" class="hidden p-3 bg-white rounded-xl border border-slate-200 space-y-3">
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-slate-700">1. Select State(s) (leave none checked = All States):</span>
+                    <button type="button" data-clear-mod-st="${m.id}" class="text-[11px] font-bold text-slate-500 hover:text-slate-800">All States (Clear)</button>
+                  </div>
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                    ${getStateList().map(st => {
+                      const checked = Array.isArray(m.allowedStates) && m.allowedStates.includes(st) ? 'checked' : '';
+                      return `<label class="flex items-center gap-1.5 p-1 rounded hover:bg-teal-50 cursor-pointer"><input type="checkbox" class="mod-st-cb-${m.id}" value="${st}" ${checked} /> <span>${st}</span></label>`;
+                    }).join('')}
+                  </div>
                 </div>
-                <div class="max-h-36 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 gap-1">
-                  ${HQ_LIST.map(hq => {
-                    const checked = Array.isArray(m.allowedHqs) && m.allowedHqs.includes(hq) ? 'checked' : '';
-                    return `<label class="flex items-center gap-1.5 truncate cursor-pointer"><input type="checkbox" class="mod-hq-cb-${m.id}" value="${hq}" ${checked} /> <span>${hq}</span></label>`;
-                  }).join('')}
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-slate-700">2. Select Head Quarter(s) (leave none checked = All HQs):</span>
+                    <button type="button" data-clear-mod-hq="${m.id}" class="text-[11px] font-bold text-slate-500 hover:text-slate-800">All HQs (Clear)</button>
+                  </div>
+                  <div id="mod-hq-grid-${m.id}" class="max-h-36 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 gap-1 p-1.5 rounded-lg border border-slate-100 bg-slate-50">
+                    ${hqPool.map(hq => {
+                      const checked = Array.isArray(m.allowedHqs) && m.allowedHqs.includes(hq) ? 'checked' : '';
+                      return `<label class="flex items-center gap-1.5 truncate cursor-pointer"><input type="checkbox" class="mod-hq-cb-${m.id}" value="${hq}" ${checked} /> <span>${hq}</span></label>`;
+                    }).join('')}
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-slate-700">3. Select Individual Employee(s) (leave none checked = All):</span>
+                    <button type="button" data-clear-mod-emp="${m.id}" class="text-[11px] font-bold text-slate-500 hover:text-slate-800">All Employees (Clear)</button>
+                  </div>
+                  <div class="max-h-32 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-1 p-1.5 rounded-lg border border-slate-100 bg-slate-50">
+                    ${allEmpsForMod.length ? allEmpsForMod.map(emp => {
+                      const checked = Array.isArray(m.allowedEmpIds) && m.allowedEmpIds.includes(emp.empId) ? 'checked' : '';
+                      return `<label class="flex items-center gap-1.5 truncate cursor-pointer"><input type="checkbox" class="mod-emp-cb-${m.id}" value="${emp.empId}" ${checked} /> <span>${emp.empId} — ${emp.name} (${emp.hq || emp.region || ''})</span></label>`;
+                    }).join('') : '<div class="text-slate-400">No registered employees yet.</div>'}
+                  </div>
+                </div>
+                <div class="flex justify-end">
+                  <button type="button" data-save-mod-hq="${m.id}" class="px-4 py-1.5 rounded-lg bg-[#0B1F3A] text-white font-bold">Save Allotment</button>
                 </div>
               </div>
             </div>
@@ -3743,15 +3706,36 @@
             if (p) p.classList.toggle('hidden');
           });
         });
+        state.modules.forEach(m => {
+          const mid = m.id;
+          const refreshHqGrid = () => {
+            const selSts = Array.from(document.querySelectorAll(`.mod-st-cb-${mid}:checked`)).map(c => c.value);
+            const curHqs = new Set(Array.from(document.querySelectorAll(`.mod-hq-cb-${mid}:checked`)).map(c => c.value));
+            const pool = getHqsForState(selSts);
+            const grid = document.getElementById(`mod-hq-grid-${mid}`);
+            if (grid) {
+              grid.innerHTML = pool.map(hq => `<label class="flex items-center gap-1.5 truncate cursor-pointer"><input type="checkbox" class="mod-hq-cb-${mid}" value="${hq}" ${curHqs.has(hq) ? 'checked' : ''} /> <span>${hq}</span></label>`).join('');
+            }
+          };
+          modDivList.querySelectorAll(`.mod-st-cb-${mid}`).forEach(cb => cb.addEventListener('change', refreshHqGrid));
+          const clrSt = modDivList.querySelector(`[data-clear-mod-st="${mid}"]`);
+          if (clrSt) clrSt.addEventListener('click', () => { modDivList.querySelectorAll(`.mod-st-cb-${mid}`).forEach(c => c.checked = false); refreshHqGrid(); });
+          const clrHq = modDivList.querySelector(`[data-clear-mod-hq="${mid}"]`);
+          if (clrHq) clrHq.addEventListener('click', () => { modDivList.querySelectorAll(`.mod-hq-cb-${mid}`).forEach(c => c.checked = false); });
+          const clrEmp = modDivList.querySelector(`[data-clear-mod-emp="${mid}"]`);
+          if (clrEmp) clrEmp.addEventListener('click', () => { modDivList.querySelectorAll(`.mod-emp-cb-${mid}`).forEach(c => c.checked = false); });
+        });
         modDivList.querySelectorAll('[data-save-mod-hq]').forEach(btn => {
           btn.addEventListener('click', () => {
             const mid = btn.dataset.saveModHq;
             const m = state.modules.find(x => x.id === mid);
             if (!m) return;
+            m.allowedStates = Array.from(document.querySelectorAll(`.mod-st-cb-${mid}:checked`)).map(cb => cb.value);
             m.allowedHqs = Array.from(document.querySelectorAll(`.mod-hq-cb-${mid}:checked`)).map(cb => cb.value);
-            saveState();
+            m.allowedEmpIds = Array.from(document.querySelectorAll(`.mod-emp-cb-${mid}:checked`)).map(cb => cb.value);
+            saveState(true);
             renderAdmin();
-            showToast(`Updated HQ allotment for "${m.title}".`, 'success');
+            showToast(`Updated allotment for "${m.title}".`, 'success');
           });
         });
       }
@@ -3810,16 +3794,7 @@
         });
       }
 
-      const modStSel = document.getElementById('adm-mod-state');
-      if (modStSel) {
-        const cur = modStSel.value;
-        modStSel.innerHTML = '<option value="">All States</option>' + getStateList().map(s => `<option value="${s}" ${cur===s?'selected':''}>${s}</option>`).join('');
-      }
-      const exStSel = document.getElementById('adm-excel-state');
-      if (exStSel) {
-        const cur = exStSel.value;
-        exStSel.innerHTML = '<option value="">All States (Full Country)</option>' + getStateList().map(s => `<option value="${s}" ${cur===s?'selected':''}>${s}</option>`).join('');
-      }
+      if (typeof refreshAllAdminMultiSelects === 'function') refreshAllAdminMultiSelects();
 
       const ovrList = document.getElementById('adm-override-list');
       if (ovrList) {
@@ -3894,69 +3869,347 @@
       updateCloudBadge();
     }
 
-    function updateAlertTargetOptions() {
-      const scope = document.getElementById('adm-alert-scope').value;
-      const targetSel = document.getElementById('adm-alert-target');
-      const hqSubEl = document.getElementById('adm-alert-hq-sub');
-      if (hqSubEl && scope !== 'STATE') hqSubEl.classList.add('hidden');
-      if (scope === 'ALL') {
-        targetSel.classList.add('hidden');
-        targetSel.innerHTML = '<option value="ALL">All Employees</option>';
-      } else if (scope === 'DIVISION') {
-        targetSel.classList.remove('hidden');
-        targetSel.innerHTML = '<option value="SKAN">SKAN</option><option value="SKN">SKN</option><option value="Other">Other</option>';
-      } else if (scope === 'HQ') {
-        targetSel.classList.remove('hidden');
-        targetSel.innerHTML = HQ_LIST.map(hq => `<option value="${hq}">${hq}</option>`).join('');
-      } else if (scope === 'STATE') {
-        targetSel.classList.remove('hidden');
-        targetSel.innerHTML = getStateList().map(st => `<option value="${st}">${st}</option>`).join('');
-        const hqSub = document.getElementById('adm-alert-hq-sub');
-        if (hqSub) {
-          hqSub.classList.remove('hidden');
-          const hqs = getHqsForState(targetSel.value);
-          hqSub.innerHTML = '<option value="">Full State (All HQs in State)</option>' + hqs.map(h => `<option value="${h}">${h}</option>`).join('');
+    // Reusable Multi-Select Dropdown Component
+    const activeMsPanels = [];
+    document.addEventListener('click', (e) => {
+      activeMsPanels.forEach(ms => {
+        if (ms.wrap && !ms.wrap.contains(e.target)) ms.close();
+      });
+    });
+
+    function createMultiSelect(containerId, config) {
+      const host = document.getElementById(containerId);
+      if (!host) return null;
+      let items = (config.items || []).map(it => typeof it === 'string' ? { value: it, label: it } : it);
+      let selected = new Set(config.selected || []);
+      let allChecked = Boolean(config.defaultAll);
+      let filterText = '';
+
+      host.innerHTML = `
+        <div class="ms-wrap">
+          <button type="button" class="ms-trigger">
+            <span class="ms-summary truncate">${config.placeholder || 'Select...'}</span>
+            <span class="text-slate-400 text-[10px]">▾</span>
+          </button>
+          <div class="ms-panel hidden">
+            <input type="text" class="ms-search w-full px-2.5 py-1.5 mb-1.5 rounded-lg border border-slate-200 text-xs outline-none focus:border-teal-600" placeholder="Search..." />
+            <div class="flex items-center justify-between gap-1.5 mb-1.5">
+              <button type="button" class="ms-btn-all flex-1 px-2 py-1 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 text-[11px] font-bold">Select All</button>
+              <button type="button" class="ms-btn-clr flex-1 px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold">Clear</button>
+              <button type="button" class="ms-btn-done px-2.5 py-1 rounded-lg bg-[#0B1F3A] text-white text-[11px] font-bold">Done</button>
+            </div>
+            ${config.allOptionLabel ? `<label class="ms-opt ms-opt-all mb-1"><input type="checkbox" class="ms-all-cb" ${allChecked ? 'checked' : ''} /> <span>${config.allOptionLabel}</span></label>` : ''}
+            <div class="ms-list"></div>
+          </div>
+        </div>
+      `;
+
+      const wrap = host.querySelector('.ms-wrap');
+      const trigger = host.querySelector('.ms-trigger');
+      const summary = host.querySelector('.ms-summary');
+      const panel = host.querySelector('.ms-panel');
+      const searchInp = host.querySelector('.ms-search');
+      const listEl = host.querySelector('.ms-list');
+      const allCb = host.querySelector('.ms-all-cb');
+
+      function updateSummary() {
+        if (config.allOptionLabel && allChecked) {
+          summary.textContent = config.allOptionLabel;
+          return;
         }
-      } else if (scope === 'EMPLOYEE') {
-        targetSel.classList.remove('hidden');
-        const emps = Object.values(state.employees);
-        targetSel.innerHTML = emps.length
-          ? emps.map(e => `<option value="${e.empId}">${e.empId} — ${e.name}</option>`).join('')
-          : '<option value="">No registered employees yet</option>';
+        const arr = Array.from(selected);
+        if (!arr.length) {
+          summary.textContent = config.placeholder || 'None selected';
+        } else if (arr.length <= 2) {
+          summary.textContent = arr.map(v => {
+            const f = items.find(i => i.value === v);
+            return f ? f.label : v;
+          }).join(', ');
+        } else {
+          const first = items.find(i => i.value === arr[0]);
+          summary.textContent = `${arr.length} selected (${first ? first.label : arr[0]}...)`;
+        }
       }
+
+      function renderList() {
+        const q = filterText.trim().toLowerCase();
+        const filtered = items.filter(it => !q || it.label.toLowerCase().includes(q) || it.value.toLowerCase().includes(q));
+        listEl.innerHTML = filtered.length ? filtered.map(it => `
+          <label class="ms-opt">
+            <input type="checkbox" class="ms-item-cb" value="${it.value.replace(/"/g, '&quot;')}" ${selected.has(it.value) ? 'checked' : ''} />
+            <span class="truncate">${it.label}</span>
+          </label>
+        `).join('') : '<div class="text-[11px] text-slate-400 p-2">No options available</div>';
+
+        listEl.querySelectorAll('.ms-item-cb').forEach(cb => {
+          cb.addEventListener('change', () => {
+            if (cb.checked) {
+              selected.add(cb.value);
+              if (allCb) { allChecked = false; allCb.checked = false; }
+            } else {
+              selected.delete(cb.value);
+            }
+            updateSummary();
+            if (config.onChange) config.onChange(api.getSelected());
+          });
+        });
+      }
+
+      if (allCb) {
+        allCb.addEventListener('change', () => {
+          allChecked = allCb.checked;
+          if (allChecked) {
+            selected.clear();
+            renderList();
+          }
+          updateSummary();
+          if (config.onChange) config.onChange(api.getSelected());
+        });
+      }
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wasHidden = panel.classList.contains('hidden');
+        activeMsPanels.forEach(ms => ms.close());
+        if (wasHidden) {
+          panel.classList.remove('hidden');
+          searchInp.focus();
+        }
+      });
+
+      searchInp.addEventListener('input', () => {
+        filterText = searchInp.value;
+        renderList();
+      });
+
+      host.querySelector('.ms-btn-all').addEventListener('click', () => {
+        if (allCb) { allChecked = false; allCb.checked = false; }
+        items.forEach(it => selected.add(it.value));
+        renderList();
+        updateSummary();
+        if (config.onChange) config.onChange(api.getSelected());
+      });
+
+      host.querySelector('.ms-btn-clr').addEventListener('click', () => {
+        selected.clear();
+        if (allCb) { allChecked = Boolean(config.defaultAll); allCb.checked = allChecked; }
+        renderList();
+        updateSummary();
+        if (config.onChange) config.onChange(api.getSelected());
+      });
+
+      host.querySelector('.ms-btn-done').addEventListener('click', () => {
+        panel.classList.add('hidden');
+      });
+
+      const api = {
+        wrap,
+        close: () => panel.classList.add('hidden'),
+        getSelected: () => (config.allOptionLabel && allChecked) ? [] : Array.from(selected),
+        isAllSelected: () => Boolean(config.allOptionLabel && allChecked),
+        setItems: (newItems, keepExisting = true) => {
+          items = (newItems || []).map(it => typeof it === 'string' ? { value: it, label: it } : it);
+          if (!keepExisting) selected.clear();
+          else {
+            const valid = new Set(items.map(i => i.value));
+            selected = new Set(Array.from(selected).filter(v => valid.has(v)));
+          }
+          renderList();
+          updateSummary();
+        },
+        reset: () => {
+          selected.clear();
+          allChecked = Boolean(config.defaultAll);
+          if (allCb) allCb.checked = allChecked;
+          filterText = '';
+          searchInp.value = '';
+          renderList();
+          updateSummary();
+        }
+      };
+
+      activeMsPanels.push(api);
+      renderList();
+      updateSummary();
+      return api;
     }
-    document.getElementById('adm-alert-scope').addEventListener('change', updateAlertTargetOptions);
-    document.getElementById('adm-alert-target').addEventListener('change', () => {
-      if (document.getElementById('adm-alert-scope').value === 'STATE') {
-        const hqSub = document.getElementById('adm-alert-hq-sub');
-        const hqs = getHqsForState(document.getElementById('adm-alert-target').value);
-        if (hqSub) {
-          hqSub.innerHTML = '<option value="">Full State (All HQs in State)</option>' + hqs.map(h => `<option value="${h}">${h}</option>`).join('');
+
+    function getEmpOptions() {
+      return Object.values(state.employees || {}).map(e => ({
+        value: e.empId,
+        label: `${e.empId} — ${e.name} (${e.hq || e.region || ''})`
+      }));
+    }
+
+    const msModStates = createMultiSelect('adm-mod-states-ms', {
+      placeholder: 'All States (Tap to select)',
+      allOptionLabel: 'All States',
+      defaultAll: true,
+      items: getStateList(),
+      onChange: (sts) => {
+        if (msModHqs) msModHqs.setItems(getHqsForState(sts), true);
+      }
+    });
+    const msModHqs = createMultiSelect('adm-mod-hqs-ms', {
+      placeholder: 'All HQs (Tap to select)',
+      allOptionLabel: 'All HQs',
+      defaultAll: true,
+      items: getHqsForState([])
+    });
+    const msModEmps = createMultiSelect('adm-mod-emps-ms', {
+      placeholder: 'All Employees (Tap to select)',
+      allOptionLabel: 'All Employees',
+      defaultAll: true,
+      items: getEmpOptions()
+    });
+
+    const msExcelStates = createMultiSelect('adm-excel-states-ms', {
+      placeholder: 'All States',
+      allOptionLabel: 'All States',
+      defaultAll: true,
+      items: getStateList(),
+      onChange: (sts) => {
+        if (msExcelHqs) msExcelHqs.setItems(getHqsForState(sts), true);
+      }
+    });
+    const msExcelHqs = createMultiSelect('adm-excel-hqs-ms', {
+      placeholder: 'All HQs',
+      allOptionLabel: 'All HQs',
+      defaultAll: true,
+      items: getHqsForState([])
+    });
+    const msExcelEmps = createMultiSelect('adm-excel-emps-ms', {
+      placeholder: 'All Employees',
+      allOptionLabel: 'All Employees',
+      defaultAll: true,
+      items: getEmpOptions()
+    });
+
+    const msAlertStates = createMultiSelect('adm-alert-states-ms', {
+      placeholder: 'Select State(s)...',
+      items: getStateList(),
+      onChange: (sts) => {
+        const hqWrap = document.getElementById('adm-alert-hqs-wrap');
+        if (document.getElementById('adm-alert-scope').value === 'STATE') {
+          if (sts.length > 0) {
+            hqWrap.classList.remove('hidden');
+            msAlertHqs.setItems(getHqsForState(sts), true);
+          } else {
+            hqWrap.classList.add('hidden');
+            msAlertHqs.reset();
+          }
         }
       }
     });
+    const msAlertHqs = createMultiSelect('adm-alert-hqs-ms', {
+      placeholder: 'All HQs in Selected State(s)',
+      allOptionLabel: 'All HQs (Full Selected State)',
+      defaultAll: true,
+      items: getHqsForState([])
+    });
+    const msAlertEmps = createMultiSelect('adm-alert-emps-ms', {
+      placeholder: 'Select Employee(s)...',
+      items: getEmpOptions()
+    });
+
+    function refreshAllAdminMultiSelects() {
+      const emps = getEmpOptions();
+      if (msModEmps) msModEmps.setItems(emps, true);
+      if (msExcelEmps) msExcelEmps.setItems(emps, true);
+      if (msAlertEmps) msAlertEmps.setItems(emps, true);
+      if (msModHqs && msModStates) msModHqs.setItems(getHqsForState(msModStates.getSelected()), true);
+      if (msExcelHqs && msExcelStates) msExcelHqs.setItems(getHqsForState(msExcelStates.getSelected()), true);
+    }
+
+    function updateAlertTargetOptions() {
+      const scope = document.getElementById('adm-alert-scope').value;
+      const row = document.getElementById('adm-alert-targets-row');
+      const stWrap = document.getElementById('adm-alert-states-wrap');
+      const hqWrap = document.getElementById('adm-alert-hqs-wrap');
+      const empWrap = document.getElementById('adm-alert-emps-wrap');
+      row.classList.toggle('hidden', scope === 'ALL');
+      stWrap.classList.add('hidden');
+      hqWrap.classList.add('hidden');
+      empWrap.classList.add('hidden');
+
+      if (scope === 'STATE') {
+        stWrap.classList.remove('hidden');
+        const selSts = msAlertStates ? msAlertStates.getSelected() : [];
+        if (selSts.length > 0) {
+          hqWrap.classList.remove('hidden');
+          if (msAlertHqs) msAlertHqs.setItems(getHqsForState(selSts), true);
+        }
+      } else if (scope === 'HQ') {
+        hqWrap.classList.remove('hidden');
+        if (msAlertHqs) msAlertHqs.setItems(getHqsForState([]), true);
+      } else if (scope === 'EMPLOYEE') {
+        empWrap.classList.remove('hidden');
+        if (msAlertEmps) msAlertEmps.setItems(getEmpOptions(), true);
+      }
+    }
+    document.getElementById('adm-alert-scope').addEventListener('change', updateAlertTargetOptions);
 
     document.getElementById('admin-alert-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const scope = document.getElementById('adm-alert-scope').value;
-      const hqSubVal = (scope === 'STATE' && document.getElementById('adm-alert-hq-sub')) ? document.getElementById('adm-alert-hq-sub').value : '';
-      const finalScope = (scope === 'STATE' && hqSubVal) ? 'HQ' : scope;
-      const target = scope === 'ALL' ? 'ALL' : (hqSubVal || document.getElementById('adm-alert-target').value);
-      if (!target) {
-        showToast('Please select a target.', 'warn');
-        return;
+      const msg = document.getElementById('adm-alert-msg').value.trim();
+      const type = document.getElementById('adm-alert-type').value;
+      let targets = [];
+      let stateTargets = [];
+      let hqTargets = [];
+      let targetLabel = 'ALL';
+
+      if (scope === 'STATE') {
+        stateTargets = msAlertStates.getSelected();
+        if (!stateTargets.length) {
+          showToast('Please select at least one State.', 'warn');
+          return;
+        }
+        hqTargets = msAlertHqs.getSelected();
+        targets = hqTargets.length ? hqTargets : stateTargets;
+        targetLabel = hqTargets.length
+          ? `${stateTargets.join(', ')} → ${hqTargets.join(', ')}`
+          : `${stateTargets.join(', ')} (All HQs)`;
+      } else if (scope === 'HQ') {
+        hqTargets = msAlertHqs.getSelected();
+        if (!hqTargets.length && !msAlertHqs.isAllSelected()) {
+          showToast('Please select at least one HQ (or All HQs).', 'warn');
+          return;
+        }
+        if (msAlertHqs.isAllSelected()) {
+          targets = ['ALL'];
+          targetLabel = 'All HQs';
+        } else {
+          targets = hqTargets;
+          targetLabel = hqTargets.join(', ');
+        }
+      } else if (scope === 'EMPLOYEE') {
+        targets = msAlertEmps.getSelected();
+        if (!targets.length) {
+          showToast('Please select at least one Employee.', 'warn');
+          return;
+        }
+        targetLabel = targets.join(', ');
       }
+
+      const finalScope = (scope === 'HQ' && msAlertHqs.isAllSelected()) ? 'ALL' : scope;
       state.alerts.push({
         id: `al_${Date.now()}`,
         scope: finalScope,
-        type: document.getElementById('adm-alert-type').value,
-        target,
-        message: document.getElementById('adm-alert-msg').value.trim(),
+        type,
+        target: targetLabel,
+        targets,
+        stateTargets,
+        hqTargets,
+        extraEmpIds: [],
+        message: msg,
         date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })
       });
-      saveState();
+      saveState(true);
       e.target.reset();
-
+      msAlertStates.reset();
+      msAlertHqs.reset();
+      msAlertEmps.reset();
       updateAlertTargetOptions();
       renderAdmin();
       showToast('Alert / notification sent!', 'success');
@@ -4072,54 +4325,17 @@
       });
     }
 
-    // HQ Picker UI inside Add Module Form
-    function renderAddModHqChecklist(filter = '', preselectAll = false) {
-      const box = document.getElementById('adm-mod-hq-checklist');
-      if (!box) return;
-      const selState = document.getElementById('adm-mod-state') ? document.getElementById('adm-mod-state').value : '';
-      const hqPool = getHqsForState(selState);
-      const q = filter.trim().toLowerCase();
-      const checkedSet = new Set(Array.from(box.querySelectorAll('input:checked')).map(c => c.value));
-      box.innerHTML = hqPool
-        .filter(h => !q || h.toLowerCase().includes(q))
-        .map(h => `<label class="flex items-center gap-1.5 truncate cursor-pointer"><input type="checkbox" value="${h}" ${(preselectAll || checkedSet.has(h)) ? 'checked' : ''} /> <span>${h}</span></label>`)
-        .join('');
-    }
-    renderAddModHqChecklist();
-
-    document.getElementById('adm-mod-division').addEventListener('change', (e) => {
-      const wrap = document.getElementById('adm-mod-hq-wrap');
-      if (e.target.value) wrap.classList.remove('hidden');
-      else wrap.classList.add('hidden');
-    });
-    document.getElementById('adm-mod-hq-mode').addEventListener('change', (e) => {
-      const picker = document.getElementById('adm-mod-hq-picker');
-      if (e.target.value === 'SPECIFIC') picker.classList.remove('hidden');
-      else picker.classList.add('hidden');
-    });
-    document.getElementById('adm-mod-hq-search').addEventListener('input', (e) => {
-      renderAddModHqChecklist(e.target.value);
-    });
-    document.getElementById('btn-hq-select-all').addEventListener('click', () => {
-      document.querySelectorAll('#adm-mod-hq-checklist input[type="checkbox"]').forEach(c => { c.checked = true; });
-    });
-    document.getElementById('btn-hq-clear-all').addEventListener('click', () => {
-      document.querySelectorAll('#adm-mod-hq-checklist input[type="checkbox"]').forEach(c => { c.checked = false; });
-    });
-
     document.getElementById('admin-add-mod-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const title = document.getElementById('adm-mod-title').value.trim();
       const desc = document.getElementById('adm-mod-desc').value.trim();
       const division = document.getElementById('adm-mod-division').value || 'ALL';
-      const hqMode = document.getElementById('adm-mod-hq-mode').value;
-      const allowedHqs = hqMode === 'SPECIFIC'
-        ? Array.from(document.querySelectorAll('#adm-mod-hq-checklist input:checked')).map(c => c.value)
-        : [];
-      const modStateVal = document.getElementById('adm-mod-state').value.trim();
-      const allowedStates = modStateVal ? [modStateVal] : [];
+      const allowedStates = msModStates ? msModStates.getSelected() : [];
+      const allowedHqs = msModHqs ? msModHqs.getSelected() : [];
+      const msEmpIds = msModEmps ? msModEmps.getSelected() : [];
       const modEmpRaw = document.getElementById('adm-mod-empids').value.trim();
-      const allowedEmpIds = modEmpRaw ? modEmpRaw.split(',').map(x => x.trim().toUpperCase()).filter(Boolean) : [];
+      const typedEmpIds = modEmpRaw ? modEmpRaw.split(',').map(x => x.trim().toUpperCase()).filter(Boolean) : [];
+      const allowedEmpIds = Array.from(new Set([...msEmpIds, ...typedEmpIds]));
       const deadlineDaysVal = document.getElementById('adm-mod-days').value.trim();
       const dueDateVal = document.getElementById('adm-mod-due-date').value;
       const notes = document.getElementById('adm-mod-notes').value.trim();
@@ -4172,8 +4388,9 @@
       state.modules.push(newMod);
       saveState();
       e.target.reset();
-      document.getElementById('adm-mod-hq-wrap').classList.add('hidden');
-      document.getElementById('adm-mod-hq-picker').classList.add('hidden');
+      if (msModStates) msModStates.reset();
+      if (msModHqs) { msModHqs.setItems(getHqsForState([]), false); msModHqs.reset(); }
+      if (msModEmps) msModEmps.reset();
       renderAdmin();
       showToast(`Published "${title}"!`, 'success');
     });
@@ -4484,7 +4701,7 @@
         await navigator.clipboard.writeText(shareUrl);
         showToast('Live Share Link copied!', 'success');
       } catch (e) {
-        prompt('Copy this Live Share Link for HR, CEO & Team:', shareUrl);
+        openInputModal('Copy this Live Share Link for HR, CEO & Team:', shareUrl);
       }
     });
 
@@ -4551,15 +4768,75 @@
       if (delModBtn) delModBtn.classList.toggle('hidden', isDefault);
       const qs = mod.quiz || [];
       listEl.innerHTML = qs.length ? qs.map((q, qi) => `
-        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-2 text-xs">
-          <div>
-            <div class="font-bold text-slate-900">${qi + 1}. ${q.q}</div>
-            <div class="text-slate-500 mt-0.5">Correct: Option ${['A', 'B', 'C', 'D'][q.answer] || 'A'} (${q.options[q.answer] || ''})</div>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="font-bold text-slate-900">${qi + 1}. ${q.q}</div>
+              <div class="text-slate-500 mt-0.5">Correct: Option ${['A', 'B', 'C', 'D'][q.answer] || 'A'} (${q.options[q.answer] || ''})</div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" data-edit-q="${qi}" class="px-2.5 py-1 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-800 font-bold">Edit</button>
+              <button type="button" data-del-q="${qi}" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold">Delete</button>
+            </div>
           </div>
-          <button type="button" data-del-q="${qi}" class="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold shrink-0">Delete</button>
+          <div id="edit-q-box-${qi}" class="hidden p-2.5 rounded-xl bg-white border border-teal-200 space-y-2">
+            <input id="edit-q-text-${qi}" type="text" value="${String(q.q || '').replace(/"/g, '&quot;')}" placeholder="Question text" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 font-semibold outline-none focus:border-teal-600" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+              <input id="edit-q-opt0-${qi}" type="text" value="${String(q.options[0] || '').replace(/"/g, '&quot;')}" placeholder="Option A" class="px-2.5 py-1.5 rounded-lg border border-slate-200" />
+              <input id="edit-q-opt1-${qi}" type="text" value="${String(q.options[1] || '').replace(/"/g, '&quot;')}" placeholder="Option B" class="px-2.5 py-1.5 rounded-lg border border-slate-200" />
+              <input id="edit-q-opt2-${qi}" type="text" value="${String(q.options[2] || '').replace(/"/g, '&quot;')}" placeholder="Option C" class="px-2.5 py-1.5 rounded-lg border border-slate-200" />
+              <input id="edit-q-opt3-${qi}" type="text" value="${String(q.options[3] || '').replace(/"/g, '&quot;')}" placeholder="Option D" class="px-2.5 py-1.5 rounded-lg border border-slate-200" />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+              <select id="edit-q-ans-${qi}" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-semibold">
+                <option value="0" ${q.answer === 0 ? 'selected' : ''}>Correct: Option A</option>
+                <option value="1" ${q.answer === 1 ? 'selected' : ''}>Correct: Option B</option>
+                <option value="2" ${q.answer === 2 ? 'selected' : ''}>Correct: Option C</option>
+                <option value="3" ${q.answer === 3 ? 'selected' : ''}>Correct: Option D</option>
+              </select>
+              <input id="edit-q-exp-${qi}" type="text" value="${String(q.exp || '').replace(/"/g, '&quot;')}" placeholder="Explanation (optional)" class="px-2.5 py-1.5 rounded-lg border border-slate-200" />
+            </div>
+            <div class="flex gap-2">
+              <button type="button" data-save-q="${qi}" class="px-3 py-1 rounded-lg bg-teal-600 text-white font-bold">Save Question</button>
+              <button type="button" data-cancel-q="${qi}" class="px-3 py-1 rounded-lg bg-slate-200 text-slate-700 font-bold">Cancel</button>
+            </div>
+          </div>
         </div>
       `).join('') : '<div class="p-3 rounded-xl bg-slate-50 text-xs text-slate-500">No quiz questions in this module.</div>';
 
+      listEl.querySelectorAll('[data-edit-q]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById(`edit-q-box-${btn.dataset.editQ}`).classList.toggle('hidden');
+        });
+      });
+      listEl.querySelectorAll('[data-cancel-q]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.getElementById(`edit-q-box-${btn.dataset.cancelQ}`).classList.add('hidden');
+        });
+      });
+      listEl.querySelectorAll('[data-save-q]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const qi = Number(btn.dataset.saveQ);
+          const qText = document.getElementById(`edit-q-text-${qi}`).value.trim();
+          const o0 = document.getElementById(`edit-q-opt0-${qi}`).value.trim();
+          const o1 = document.getElementById(`edit-q-opt1-${qi}`).value.trim();
+          const o2 = document.getElementById(`edit-q-opt2-${qi}`).value.trim();
+          const o3 = document.getElementById(`edit-q-opt3-${qi}`).value.trim();
+          if (!qText || !o0 || !o1) {
+            showToast('Question text and at least Options A & B are required.', 'warn');
+            return;
+          }
+          mod.quiz[qi] = {
+            q: qText,
+            options: [o0, o1, o2 || 'None of the above', o3 || 'All of the above'],
+            answer: Number(document.getElementById(`edit-q-ans-${qi}`).value),
+            exp: document.getElementById(`edit-q-exp-${qi}`).value.trim()
+          };
+          saveState(true);
+          renderManageQuizList();
+          showToast('Quiz question updated!', 'success');
+        });
+      });
       listEl.querySelectorAll('[data-del-q]').forEach(btn => {
         btn.addEventListener('click', () => {
           const qi = Number(btn.dataset.delQ);
@@ -4587,13 +4864,14 @@
       const modId = document.getElementById('adm-manage-quiz-mod').value;
       const mod = state.modules.find(m => m.id === modId);
       if (!mod) return;
-      const updated = prompt('Enter new module title:', mod.title);
-      if (updated && updated.trim()) {
-        mod.title = updated.trim();
-        saveState(true);
-        renderAdmin();
-        showToast(`Module renamed to "${mod.title}".`, 'success');
-      }
+      openInputModal('Enter new module title:', mod.title, (updated) => {
+        if (updated && updated.trim()) {
+          mod.title = updated.trim();
+          saveState(true);
+          renderAdmin();
+          showToast(`Module renamed to "${mod.title}".`, 'success');
+        }
+      });
     });
 
     document.getElementById('btn-del-custom-mod').addEventListener('click', () => {
@@ -4605,10 +4883,14 @@
       showToast('Custom module deleted.', 'warn');
     });
 
-    document.getElementById('adm-excel-quiz-mod').addEventListener('change', (e) => {
+    function toggleExcelNewFields() {
+      const modVal = document.getElementById('adm-excel-quiz-mod').value;
+      const modeVal = document.getElementById('adm-excel-quiz-mode').value;
       const box = document.getElementById('adm-excel-new-mod-fields');
-      if (box) box.classList.toggle('hidden', e.target.value !== '__NEW__');
-    });
+      if (box) box.classList.toggle('hidden', modVal !== '__NEW__' && modeVal !== 'new_page');
+    }
+    document.getElementById('adm-excel-quiz-mod').addEventListener('change', toggleExcelNewFields);
+    document.getElementById('adm-excel-quiz-mode').addEventListener('change', toggleExcelNewFields);
 
     function parseQuizRowsFromObjects(rows) {
       const parsedQs = [];
@@ -4708,8 +4990,9 @@
       const mode = document.getElementById('adm-excel-quiz-mode').value;
       const file = document.getElementById('adm-excel-quiz-file').files[0];
       const exDiv = document.getElementById('adm-excel-div').value || 'ALL';
-      const exState = document.getElementById('adm-excel-state').value;
-      const exHq = document.getElementById('adm-excel-hq').value;
+      const exStates = msExcelStates ? msExcelStates.getSelected() : [];
+      const exHqs = msExcelHqs ? msExcelHqs.getSelected() : [];
+      const exEmps = msExcelEmps ? msExcelEmps.getSelected() : [];
       if (!file) return;
 
       try {
@@ -4784,9 +5067,9 @@
               targetMod = {
                 id: `mod_${Date.now()}_${Math.floor(Math.random()*1000)}`,
                 division: exDiv,
-                allowedHqs: exHq ? [exHq] : [],
-                allowedStates: exState ? [exState] : [],
-                allowedEmpIds: [],
+                allowedHqs: exHqs,
+                allowedStates: exStates,
+                allowedEmpIds: exEmps,
                 title: mTitle,
                 description: 'Imported Quiz Module',
                 audioTitle: '',
@@ -4798,23 +5081,24 @@
               state.modules.push(targetMod);
             } else {
               targetMod.division = exDiv;
-              targetMod.allowedStates = exState ? [exState] : (targetMod.allowedStates || []);
-              targetMod.allowedHqs = exHq ? [exHq] : (targetMod.allowedHqs || []);
+              if (exStates.length) targetMod.allowedStates = exStates;
+              if (exHqs.length) targetMod.allowedHqs = exHqs;
+              if (exEmps.length) targetMod.allowedEmpIds = exEmps;
               targetMod.quiz = mode === 'replace' ? qs : [...(targetMod.quiz || []), ...qs];
             }
           });
-        } else if (modId === '__NEW__') {
+        } else if (modId === '__NEW__' || mode === 'new_page') {
           const rawNewTitle = document.getElementById('adm-excel-new-title').value.trim();
           const cleanedFileTitle = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').trim();
           const isGenericName = /^(q\s*(?:&|and)?\s*a(?:ns)?|questions?\s*(?:&|and)?\s*answers?|quiz|mcqs?)$/i.test(cleanedFileTitle);
           const newTitle = rawNewTitle || (!isGenericName && cleanedFileTitle ? cleanedFileTitle : `Module ${state.modules.length + 1}: Product Quiz`);
-          const newDesc = document.getElementById('adm-excel-new-desc').value.trim() || 'Quiz module imported from document.';
+          const newDesc = document.getElementById('adm-excel-new-desc').value.trim() || 'Quiz page imported from document.';
           state.modules.push({
             id: `mod_${Date.now()}`,
             division: exDiv,
-            allowedHqs: exHq ? [exHq] : [],
-            allowedStates: exState ? [exState] : [],
-            allowedEmpIds: [],
+            allowedHqs: exHqs,
+            allowedStates: exStates,
+            allowedEmpIds: exEmps,
             title: newTitle,
             description: newDesc,
             audioTitle: '',
@@ -4827,19 +5111,63 @@
           const mod = state.modules.find(m => m.id === modId);
           if (!mod) return;
           mod.division = exDiv;
-          if (exState) mod.allowedStates = [exState];
-          if (exHq) mod.allowedHqs = [exHq];
+          if (exStates.length) mod.allowedStates = exStates;
+          if (exHqs.length) mod.allowedHqs = exHqs;
+          if (exEmps.length) mod.allowedEmpIds = exEmps;
           mod.quiz = mode === 'replace' ? parsedQs : [...(mod.quiz || []), ...parsedQs];
         }
 
         saveState(true);
         e.target.reset();
+        if (msExcelStates) msExcelStates.reset();
+        if (msExcelHqs) { msExcelHqs.setItems(getHqsForState([]), false); msExcelHqs.reset(); }
+        if (msExcelEmps) msExcelEmps.reset();
         renderAdmin();
         showToast(`Auto-designed & allotted ${parsedQs.length} question(s)!`, 'success');
       } catch (err) {
         showToast('Could not read document. Please check file format (.xlsx, .csv, or .docx).', 'error');
       }
     });
+
+    function openInputModal(title, defaultVal = '', onConfirm = null) {
+      let overlay = document.getElementById('skn-input-modal');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'skn-input-modal';
+        overlay.className = 'fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 hidden';
+        overlay.innerHTML = `
+          <div class="bg-white rounded-2xl shadow-xl border border-slate-200 w-full max-w-md p-5 space-y-3">
+            <div id="skn-modal-title" class="text-sm font-extrabold text-slate-900"></div>
+            <input id="skn-modal-input" type="text" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-teal-600" />
+            <div class="flex justify-end gap-2">
+              <button type="button" id="skn-modal-cancel" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold">Cancel</button>
+              <button type="button" id="skn-modal-ok" class="px-4 py-2 rounded-xl bg-teal-600 text-white text-xs font-bold">Confirm</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      }
+      const titleEl = overlay.querySelector('#skn-modal-title');
+      const inpEl = overlay.querySelector('#skn-modal-input');
+      const okBtn = overlay.querySelector('#skn-modal-ok');
+      const cancelBtn = overlay.querySelector('#skn-modal-cancel');
+      titleEl.textContent = title;
+      inpEl.value = defaultVal || '';
+      overlay.classList.remove('hidden');
+      setTimeout(() => inpEl.focus(), 50);
+
+      const close = () => overlay.classList.add('hidden');
+      cancelBtn.onclick = close;
+      okBtn.onclick = () => {
+        const val = inpEl.value;
+        close();
+        if (onConfirm) onConfirm(val);
+      };
+      inpEl.onkeydown = (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); okBtn.click(); }
+        if (e.key === 'Escape') close();
+      };
+    }
 
     loadState();
     renderAppShell();
